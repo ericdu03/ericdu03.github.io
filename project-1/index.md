@@ -34,7 +34,9 @@ small image (300 x 300 pixels), so it's not computationally expensive.
 In order to find the best possible alignment, we need some heuristic (also called a metric) that allows us to quantify 
 how well a given alignment between two plates `c1` and `c2` are. The easiest and simplest metric to use is the **Euclidean
 Distance** metric, which essentially measures the difference in intensity of all pixels in `c1` against `c2`, summing 
-over all pixels. In this case, the images will be most in line when this metric is minimized. 
+over all pixels. As code, this is realized using `np.sum((test - c2)**2)`, where `test` is `c1` shifted by some 
+amount `(i, j)`, and `c2` is the fixed color plate (usually the blue one). Here, the theory is that the minimum alignment 
+occurs when this metric is minimized. 
 
 In my experience working through this project, I've also found that this metric seemed to suffice and never really seemed 
 like a bad heuristic to use to quantify alignment. I'm sure that there are more complex ones out there that probably do the 
@@ -47,10 +49,32 @@ to work with and didn't really work well for me.
 Perhaps the most obvious method we can find the best possible alignment is to do an exhaustive search of all possible 
 alignments, then return the alignment `(i_opt, j_opt)` that minimizes the metric. While this does *guarantee* that we find the best possible 
 alignment, this approach it falls flat since it's **extremely** expensive: consider the 300 x 300 pixel image: for every possible 
-alignment there are 900 computations, and there are $300^2 = 90000$ possible alignments, so for this image alone there would be 
+alignment there are 900 computations, and there are 300^2 = 90000 possible alignments, so for this image alone there would be 
 81 million operations needed!
 
 Clearly, this is not the best approach. What does save us a little bit here is that the optimal alignment isn't very far off 
-from just doing nothing, as we usually find that the optimal alignment only shifts a given plate by 10 or so. This means that we can 
+from just doing nothing (the images are more or less aligned already), as we usually find that the optimal alignment
+only shifts a given plate by 10 or so. This means that we can 
 reasonably search over a range of, say, `[-15, 15]` and be fairly certain that we have the optimal alignment, but of course 
 this feels extremely hard-coded and unsatisfying. Therefore, we need a better approach.  
+
+### Image Pyramid 
+
+With the exhaustive search being too expensive, we look to more efficient ways to search for better alignments. To motivate the image 
+pyramid method, it's important to note that the only thing holding back the naive approach is the fact that it's way too expensive, 
+and not really an indication that there's something wrong with the method itself. After all, to test alignment, we would have to 
+compute the euclidean distance at some point, so the real speedup will come from reducing the number of times we compute that 
+distance. 
+
+This is where the image pyramid comes in. Instead of computing all 90000 possible alignments of two figures, we instead downscale 
+the image to a more reasonable size, chosen to be less than 50 x 50 pixels, and perform the alignment procedure here. With the 
+downscaled image, maximally we are computing 50^2 = 2500 alignments, which is already much better than the 90000 we were working 
+with before. Then, with the optimal alignment computed, we then rescale up and update our optimal alignment as we go. Doing this 
+recursively using downscaled images massively cuts down on our runtime, even with larger images. 
+
+Further, we also don't have to search through the entire image at the smallest scale. There are two main reasons why this isn't necessary:
+first, we already mentioned earlier that the images are more or less aligned already, so we can take advantage of that and conclude that an 
+exhaustive search is nowhere near necessary.   
+
+<!-- talk about updating recursively and how that helps -->
+
