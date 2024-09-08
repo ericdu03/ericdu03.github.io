@@ -54,4 +54,3 @@ Clearly, this is not the best approach. What does save us a little bit here is t
 from just doing nothing, as we usually find that the optimal alignment only shifts a given plate by 10 or so. This means that we can 
 reasonably search over a range of, say, `[-15, 15]` and be fairly certain that we have the optimal alignment, but of course 
 this feels extremely hard-coded and unsatisfying. Therefore, we need a better approach.  
-</span>
