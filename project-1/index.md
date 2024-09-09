@@ -130,7 +130,7 @@ even without cropping. We know this to be the case too, since we can take a look
 
 ![](church-rgb.png)
     
-<p align="center"> Figure 4: RGB negatives for church.tif
+<p align="center"> Figure 4: RGB negatives for church.tif </p>
 
 As expected, we see far less complexity in `church.tif` than `sculpture.tif`, confirming our hypothesis. 
 
@@ -152,7 +152,7 @@ goal of improving my metric instead became an exploration into what *other* metr
 One method I thought of was to try and line up the edges with each other, instead of lining up raw pixel RGB values. Theoretically, this is a much 
 better metric than raw RGB values, since contours are more structured than RGB intensities, making them more resistant to image mismatches. To do this, 
 I did some digging and found a filter called the **Sobel filter/operator**, which does exactly this. The Sobel operator takes in an image, and produces 
-an *edge map* -- basically, it's a black and white image with the only edges of the image highlighted. Let's take `onion_church.tif` for instance:
+an *edge map* - basically, it's a black and white image with the only edges of the image highlighted. Let's take `onion_church.tif` for instance:
 
 <p align="center">
     <img src="onion_church-rgb.png">
@@ -170,8 +170,6 @@ We see very clearly the edge detection in action. In the filtered image, only th
 is nearly pitch black. This is beneficial for us to get a better image, since smoother areas which are more prone to misalignment are zeroed out 
 after the filter, allowing our alignment to be more precise with less effort. 
 
-TODO: explain how sobel filter works
- 
 
 #### Limitations of the Sobel Filter
 
@@ -212,8 +210,6 @@ The way I see it, I think this is an indication that there weren't enough featur
 which alignment was best. However, when we add in extraneous edges introduced by the digitization process (the white bars on the left and right of the 
 image), the Sobel filter has much more to work with, and as a result it's able to give us a better alignment of the RGB plates. Of course, this should also 
 make intuitive sense, since having more points to align with is always going to be beneficial for us here.  
- 
-EDIT 
 
 
 
