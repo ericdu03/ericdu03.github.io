@@ -129,7 +129,7 @@ white bars on the left and right of the uncropped image affects the overall metr
 even without cropping. We know this to be the case too, since we can take a look at the negatives for `church.tif`:
 
 ![](church-rgb.png)
-
+    
 <p align="center"> Figure 4: RGB negatives for church.tif
 
 As expected, we see far less complexity in `church.tif` than `sculpture.tif`, confirming our hypothesis. 
@@ -137,7 +137,6 @@ As expected, we see far less complexity in `church.tif` than `sculpture.tif`, co
 ### Aligned Images
 
 The aligned images are shown below, with the optimal alignment in a caption:
-
 
 ## Bells and Whistles
 
@@ -196,7 +195,7 @@ which alignment was best. However, when we add in extraneous edges introduced by
 image), the Sobel filter has much more to work with, and as a result it's able to give us a better alignment of the RGB plates. Of course, this should also 
 make intuitive sense, since having more points to align with is always going to be beneficial for us here.  
  
- 
+EDIT 
 
 
 
