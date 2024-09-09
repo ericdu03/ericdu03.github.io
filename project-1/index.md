@@ -87,7 +87,7 @@ the edges out of the image. To see why, consider the image `church.tif`, run on 
      
 <p align="center">
     <img src="church-uncropped.jpg"
-        width=450px
+        width=550px
         height=auto>
     <div align="center"> Figure 2: Uncropped alignment of church.tif. The alignments of the red and blue plates, respectively: 
     (52, -6) and (0, -6). The negative values just mean shifting in the opposite direction, as per the np.roll spec.  
@@ -102,7 +102,7 @@ cropping 5% from all edges (so only keeping the inner 80%) resulted in a much be
 
 <p align="center">
     <img src="church-cropped.jpg"
-        width=450px
+        width=550px
         height=auto>
     <div align="center"> Figure 3: Alignment of church.tif with cropping. Red: (58, -4), Green: (24, 0) </div>
 </p>
@@ -155,18 +155,14 @@ I did some digging and found a filter called the **Sobel filter/operator**, whic
 an *edge map* -- basically, it's a black and white image with the only edges of the image highlighted. Let's take `onion_church.tif` for instance:
 
 <p align="center">
-    <img src="onion_church-rgb.png"
-        width=450px
-        height=auto>
+    <img src="onion_church-rgb.png">
 </p>
 
 Visually, we can identify the sharp edges around the church, as well as the edges formed by the bushes at the base of the church. Looking at what 
 the images look like when passed through a Sobel filter: 
 
 <p align="center">
-    <img src="onion_church-sobel.png"
-        width=450px
-        height=auto>
+    <img src="onion_church-sobel.png">
 </p>
 
 
@@ -186,24 +182,20 @@ were provided to us, but I did find an image on the Library of Congress that ill
 of an image taken of irrigation ditches: 
 
 <p align="center">
-    <img src="murgab-rgb.png"
-        width=450px
-        height=auto>
+    <img src="murgab-rgb.png">
 </p>
 
 And now passing these through the Sobel filter:
 
 <p align="center">
-    <img src="murgab-sobel.png"
-        width=450px
-        height=auto>
+    <img src="murgab-sobel.png">
 </p>
 
 And finally the result from the Sobel filter (on the cropped image):
 
 <p align="center">
     <img src="murgab-sobel-reconstruct.png"
-        width=450px
+        width=550px
         height=auto>
 </p>
 
@@ -212,7 +204,7 @@ Interestingly, however, when we get rid of the cropping, we get a much better al
 
 <p align="center">
     <img src="murgab-sobel-uncropped.png"
-        width=450px
+        width=550px
         height=auto>
 </p>
 
