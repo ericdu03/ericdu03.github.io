@@ -129,9 +129,11 @@ white bars on the left and right of the uncropped image affects the overall metr
 even without cropping. We know this to be the case too, since we can take a look at the negatives for `church.tif`:
 
 ![](church-rgb.png)
+
 <p align="center"> Figure 4: RGB negatives for church.tif
 
 As expected, we see far less complexity in `church.tif` than `sculpture.tif`, confirming our hypothesis. 
+
 ### Aligned Images
 
 The aligned images are shown below, with the optimal alignment in a caption:
