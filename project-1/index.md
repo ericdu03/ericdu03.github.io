@@ -74,7 +74,12 @@ recursively using downscaled images massively cuts down on our runtime, even wit
 
 Further, we also don't have to search through the entire image at the smallest scale. There are two main reasons why this isn't necessary:
 first, we already mentioned earlier that the images are more or less aligned already, so we can take advantage of that and conclude that an 
-exhaustive search is nowhere near necessary.   
+exhaustive search is nowhere near necessary. Second, because we're searching over a coarse image, it allows us to "cheat" and require only that we 
+get *close enough* to the optimal offset, leveraging the fact that as we update the offset through higher resolution images, the optimal offset 
+will eventually be found.  
 
-<!-- talk about updating recursively and how that helps -->
+### Aligned Images
+
+The aligned images are shown below, with the optimal alignment in a caption:
+ 
 
