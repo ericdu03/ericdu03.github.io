@@ -54,8 +54,10 @@ alignment there are 900 computations, and there are 300^2 = 90000 possible align
 
 Clearly, this is not the best approach. What does save us a little bit here is that the optimal alignment isn't very far off 
 from just doing nothing (the images are more or less aligned already), as we usually find that the optimal alignment
-only shifts a given plate by 10 or so. This means that we can 
-reasonably search over a range of, say, `[-15, 15]` and be fairly certain that we have the optimal alignment, but of course 
+only shifts a given plate by 10 or so for the small images and 100 for the larger `.tif` files. With reference to the original 
+image sizes, this means that the optimal shift only differs from the unaligned images by roughly 1-3%.  
+This means that we can 
+reasonably search over a range of, say, `[-10, 10]` and be fairly certain that we have the optimal alignment, but of course 
 this feels extremely hard-coded and unsatisfying. Therefore, we need a better approach.  
 
 ### Image Pyramid 
@@ -67,8 +69,8 @@ compute the euclidean distance at some point, so the real speedup will come from
 distance. 
 
 This is where the image pyramid comes in. Instead of computing all 90000 possible alignments of two figures, we instead downscale 
-the image to a more reasonable size, chosen to be less than 50 x 50 pixels, and perform the alignment procedure here. With the 
-downscaled image, maximally we are computing 50^2 = 2500 alignments, which is already much better than the 90000 we were working 
+the image to a more reasonable size, chosen to be less than 100 x 100 pixels, and perform the alignment procedure here. With the 
+downscaled image, maximally we are computing 1000^2 = 10000 alignments, which is already much better than the 90000 we were working 
 with before. Then, with the optimal alignment computed, we then rescale up and update our optimal alignment as we go. Doing this 
 recursively using downscaled images massively cuts down on our runtime, even with larger images. 
 
@@ -78,8 +80,122 @@ exhaustive search is nowhere near necessary. Second, because we're searching ove
 get *close enough* to the optimal offset, leveraging the fact that as we update the offset through higher resolution images, the optimal offset 
 will eventually be found.  
 
+### Cropping
+
+Aside from optimizing the runtime of the image processing, one other modification we can make to our images to get even better alignments is to crop
+the edges out of the image. To see why, consider the image `church.tif`, run on the above procedure without cropping:
+     
+<p align="center">
+    <img src="church-uncropped.jpg"
+        width=450px
+        height=auto>
+    <div align="center"> Figure 2: Uncropped alignment of church.tif. The alignments of the red and blue plates, respectively: 
+    (52, -6) and (0, -6). The negative values just mean shifting in the opposite direction, as per the np.roll spec.  
+    </div>
+</p>
+
+As evident in the image, while the alignment isn't bad, it's not the best either, since there are still very obvious 
+artifacts visible in the image. When processing these images, it became evident to that the reason this was happening was because of the white 
+lines to the left and right of the image, and also the stripes at the top and bottom. As for the white bars, I was under the impression that 
+these only existed from the digitization process, so as a result it makes sense to crop the image to get rid of all of them. I found that
+cropping 5% from all edges (so only keeping the inner 80%) resulted in a much better image, which we can see below: 
+
+<p align="center">
+    <img src="church-cropped.jpg"
+        width=450px
+        height=auto>
+    <div align="center"> Figure 3: Alignment of church.tif with cropping. Red: (58, -4), Green: (24, 0) </div>
+</p>
+
+Many of the artifacts that we saw in the uncropped image are now gone, and we're left with a very clean image. This really proves that the culprit 
+for our misalignment in the earlier image was indeed the white bars on the left and right, since upon removal we get a much better image. 
+
+Despite the image cropping being a major factor in improving the reconstruction quality, I will note that it's not necessary for all images. For images 
+where the intensity of the subject is extremely strong, the alignment was very good even without the cropping procedure. Take the `sculpture.tif` for 
+instance:
+
+Uncropped             |  Cropped
+:-------------------------:|:-------------------------:
+![](sculpture-uncropped.jpg)  |  ![](sculpture-cropped.jpg)
+ 
+Besides the cropped image being smaller (which is to be expected), there isn't really much difference in the alignment. The reason for this becomes 
+clear when we look at the rgb negatives: 
+
+![](sculpture-rgb.png)
+<p align="center"> Figure 3: Red, Blue and Green negatives for sculpture.tif. </p>
+
+The key thing to notice in these three negatives is that the complexity throughout the image is quite high, meaning that in this particular case, the 
+white bars on the left and right of the uncropped image affects the overall metric less, and therefore this allows us to get a better alignment 
+even without cropping. We know this to be the case too, since we can take a look at the negatives for `church.tif`:
+
+![](church-rgb.png)
+<p align="center"> Figure 4: RGB negatives for church.tif
+
+As expected, we see far less complexity in `church.tif` than `sculpture.tif`, confirming our hypothesis. 
 ### Aligned Images
 
 The aligned images are shown below, with the optimal alignment in a caption:
+
+
+## Bells and Whistles
+
+In this section, I will go over the "Bells and Whistles" extra credit avenues I chose to explore for this project.  
+
+### Edge Filtering
+
+One idea that came to mind early on when I was brainstorming ways to align the images was to think of better metrics we can use to determine the 
+best possible alignment. Then, after successfully implementing the cropping procedure and seeing very good results on all the images, my initial 
+goal of improving my metric instead became an exploration into what *other* metrics could be employed to achieve the same result. 
+
+One method I thought of was to try and line up the edges with each other, instead of lining up raw pixel RGB values. Theoretically, this is a much 
+better metric than raw RGB values, since contours are more structured than RGB intensities, making them more resistant to image mismatches. To do this, 
+I did some digging and found a filter called the **Sobel filter/operator**, which does exactly this. The Sobel operator takes in an image, and produces 
+an *edge map* -- basically, it's a black and white image with the only edges of the image highlighted. Let's take `onion_church.tif` for instance:
+
+![](onion_church-rgb.png)
+
+Visually, we can identify the sharp edges around the church, as well as the edges formed by the bushes at the base of the church. Looking at what 
+the images look like when passed through a Sobel filter: 
+
+![](onion_church-sobel.png)
+
+We see very clearly the edge detection in action. In the filtered image, only the outlines of the church and the brushes are visible, and everything else
+is nearly pitch black. This is beneficial for us to get a better image, since smoother areas which are more prone to misalignment are zeroed out 
+after the filter, allowing our alignment to be more precise with less effort. 
+
+TODO: explain how sobel filter works
  
+
+#### Limitations of the Sobel Filter
+
+Despite the power of the Sobel filter, it also has some drawbacks. Perhaps most obviously, the Sobel filter relies heavily on the presence of edges 
+in order for it to be effective. That means, given an image with very few edges, the Sobel filter will return a mostly black image, and 
+therefore would be quite useless, and we're probably better off using RGB values instead. This wasn't really a problem with any of the 14 images that 
+were provided to us, but I did find an image on the Library of Congress that illustrates this point quite well. The following are the RGB negatives 
+of an image taken of irrigation ditches: 
+
+![](murgab-rgb.png)
+
+And now passing these through the Sobel filter:
+
+![](murgab-sobel.png)
+
+And finally the result from the Sobel filter (on the cropped image):
+
+![](murgab-sobel-reconstruct.png)
+
+We see the artifacts of a poor alignment here, as it seems one of the channels isn't shifted to the right as much as the others, making the image double. 
+Interestingly, however, when we get rid of the cropping, we get a much better alignment:
+
+![](murgab-sobel-uncropped.png) 
+
+The way I see it, I think this is an indication that there weren't enough features in the cropped image, so the alignment procedure had a hard time deciding 
+which alignment was best. However, when we add in extraneous edges introduced by the digitization process (the white bars on the left and right of the 
+image), the Sobel filter has much more to work with, and as a result it's able to give us a better alignment of the RGB plates. Of course, this should also 
+make intuitive sense, since having more points to align with is always going to be beneficial for us here.  
+ 
+ 
+
+
+
 
