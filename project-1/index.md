@@ -134,6 +134,7 @@ even without cropping. We know this to be the case too, since we can take a look
 
 As expected, we see far less complexity in `church.tif` than `sculpture.tif`, confirming our hypothesis. 
 
+
 ### Aligned Images
 
 The aligned images are shown below, with the optimal alignment in a caption:
@@ -153,12 +154,21 @@ better metric than raw RGB values, since contours are more structured than RGB i
 I did some digging and found a filter called the **Sobel filter/operator**, which does exactly this. The Sobel operator takes in an image, and produces 
 an *edge map* -- basically, it's a black and white image with the only edges of the image highlighted. Let's take `onion_church.tif` for instance:
 
-![](onion_church-rgb.png)
+<p align="center">
+    <img src="onion_church-rgb.png"
+        width=450px
+        height=auto>
+</p>
 
 Visually, we can identify the sharp edges around the church, as well as the edges formed by the bushes at the base of the church. Looking at what 
 the images look like when passed through a Sobel filter: 
 
-![](onion_church-sobel.png)
+<p align="center">
+    <img src="onion_church-sobel.png"
+        width=450px
+        height=auto>
+</p>
+
 
 We see very clearly the edge detection in action. In the filtered image, only the outlines of the church and the brushes are visible, and everything else
 is nearly pitch black. This is beneficial for us to get a better image, since smoother areas which are more prone to misalignment are zeroed out 
@@ -175,20 +185,36 @@ therefore would be quite useless, and we're probably better off using RGB values
 were provided to us, but I did find an image on the Library of Congress that illustrates this point quite well. The following are the RGB negatives 
 of an image taken of irrigation ditches: 
 
-![](murgab-rgb.png)
+<p align="center">
+    <img src="murgab-rgb.png"
+        width=450px
+        height=auto>
+</p>
 
 And now passing these through the Sobel filter:
 
-![](murgab-sobel.png)
+<p align="center">
+    <img src="murgab-sobel.png"
+        width=450px
+        height=auto>
+</p>
 
 And finally the result from the Sobel filter (on the cropped image):
 
-![](murgab-sobel-reconstruct.png)
+<p align="center">
+    <img src="murgab-sobel-reconstruct.png"
+        width=450px
+        height=auto>
+</p>
 
 We see the artifacts of a poor alignment here, as it seems one of the channels isn't shifted to the right as much as the others, making the image double. 
 Interestingly, however, when we get rid of the cropping, we get a much better alignment:
 
-![](murgab-sobel-uncropped.png) 
+<p align="center">
+    <img src="murgab-sobel-uncropped.png"
+        width=450px
+        height=auto>
+</p>
 
 The way I see it, I think this is an indication that there weren't enough features in the cropped image, so the alignment procedure had a hard time deciding 
 which alignment was best. However, when we add in extraneous edges introduced by the digitization process (the white bars on the left and right of the 
