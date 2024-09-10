@@ -221,7 +221,10 @@ the images look like when passed through a Sobel filter:
 We see very clearly the edge detection in action. In the filtered image, only the outlines of the church and the brushes are visible, and everything else
 is nearly pitch black. This is beneficial for us to get a better image, since smoother areas which are more prone to misalignment are zeroed out 
 after the filter, allowing our alignment to be more precise with less effort. 
-#### Therory of the Sobel Filer
+
+#### Theory of the Sobel Filter
+
+The Sobel operator is 
 
 ```math
 \mathbf{G}_x = \begin{bmatrix} 1 & 0 & -1 \\ 2 & 0 & -2\\1 & 0 & -1\end{bmatrix} 
@@ -255,13 +258,17 @@ And finally the result from the Sobel filter (on the cropped image):
 </p>
 
 We see the artifacts of a poor alignment here, as it seems one of the channels isn't shifted to the right as much as the others, making the image double. 
-Interestingly, however, when we get rid of the cropping, we get a much better alignment:
+Interestingly, however, when we get rid of the cropping, we get a better alignment:
 
 <p align="center">
     <img src="murgab-sobel-uncropped.png"
         width=550px
         height=auto>
 </p>
+
+In the cropped image, the features at around `(3000, 1500)` seem to be a little 
+blue/purple, but in the uncropped image these blue hues are completely removed, an 
+indication of good alignment.
 
 The way I see it, I think this is an indication that there weren't enough features in the cropped image, so the alignment procedure had a hard time deciding 
 which alignment was best. However, when we add in extraneous edges introduced by the digitization process (the white bars on the left and right of the 
