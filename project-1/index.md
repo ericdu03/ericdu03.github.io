@@ -228,9 +228,11 @@ after the filter, allowing our alignment to be more precise with less effort.
 The Sobel operator is basically a combination of two matrix convolutions between a matrix which 
 varies only vertically, and one that varies horizontally. 
 
-<p align="center">
+$$ x^2$$
+
+<!-- <p align="center">
   <img src ="sobel.png">
-</p>
+</p> -->
 
 As a result of the convolution, G_x and G_y are matrices which detect vertical and horizontal edges in the image. Then, combining them via a Euclidean distance metric:  
 
