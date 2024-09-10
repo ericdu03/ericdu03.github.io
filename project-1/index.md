@@ -228,7 +228,7 @@ after the filter, allowing our alignment to be more precise with less effort.
 The Sobel operator is basically a combination of two matrix convolutions between a matrix which 
 varies only vertically, and one that varies horizontally. 
 
-$$ x^2$$
+$$ x^2 $$
 
 <!-- <p align="center">
   <img src ="sobel.png">
