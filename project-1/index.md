@@ -91,7 +91,7 @@ the edges out of the image. To see why, consider the image `church.tif`, run on 
         width=550px
         height=auto>
     <div align="center"> Figure 2: Uncropped alignment of church.tif. The alignments of the red and blue plates, respectively: 
-    (52, -6) and (0, -6). The negative values just mean shifting in the opposite direction, as per the np.roll spec.  
+    (52, -6) and (0, -6). The negative values just mean shifting in the opposite direction, as described in the np.roll() spec.
     </div>
 </p>
 
@@ -191,7 +191,39 @@ The aligned images are shown below, with the optimal alignment in a caption and 
     </tr>
   </tbody>
 </table>
- 
+
+### Other photos from the collection
+
+This section is mainly completely out of sheer curiosity, as I ran my algorithm on a couple of other images I found on the Library of Congress's website. I tried to find ones that I believed would be difficult for my algorithm to detect, due to the image complexity. These were all done using using the Sobel filter, see the next section for more details.
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2" style="text-align: center;"> TIFF images </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;"><img width="1000"  src="./LoC-aligned/kem_pristan.jpg"> Displacement: Red (22, -82), Green (-30, -92) <br /> Runtime: 5.86 seconds</td>
+      <td style="text-align: center;"><img width="1000"  src="./LoC-aligned/Cheremukha.jpg">Displacement: Red (108, 2), Green (50, 2) <br /> Runtime: 6.08 seconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img width="1000" src="./LoC-aligned/Minyar.jpg">Displacement: Red (108, 2), Green (50, 2) <br /> Runtime: 5.78 seconds</td>
+      <td style="text-align: center;"><img width="1000"  src="./LoC-aligned/murgab.jpg">Displacement: Red (74, -30), Green (34, -28) <br /> Runtime: 5.915 seconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img width="1000" src="./LoC-aligned/zavod.jpg">Displacement: Red (116, -2), Green (54, 8) <br /> Runtime: 6.022 seconds</td>
+      <td style="text-align: center;"><img width="1000" alt="melons" src="./LoC-aligned/greenhouse.jpg">Displacement: Red (126, 34), Green (60, 28) <br /> Runtime: 5.70 seconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img width="1000" src="./LoC-aligned/pakhatnoe.jpg">Displacement: Red (104, 18), Green (28, 10) <br /> Runtime: 5.18 seconds</td>
+      <td style="text-align: center;"><img width="1000" src="./LoC-aligned/yurt.jpg">Displacement: Red (106, 56), Green (50, 38) <br /> Runtime: 5.20 seconds</td>
+    </tr>
+  </tbody>
+</table>
+
+All of these photos lined up very well, I cannot tell you how happy I was to see this :)
+
 ## Bells and Whistles
 
 In this section, I will go over the "Bells and Whistles" extra credit avenues I chose to explore for this project.  
@@ -218,16 +250,34 @@ the images look like when passed through a Sobel filter:
     <img src="onion_church-sobel.png">
 </p>
 
-
 We see very clearly the edge detection in action. In the filtered image, only the outlines of the church and the brushes are visible, and everything else
 is nearly pitch black. This is beneficial for us to get a better image, since smoother areas which are more prone to misalignment are zeroed out 
 after the filter, allowing our alignment to be more precise with less effort. 
 
+To show the power of the Sobel filter, it's not actually that great to look at the cropped image here (they look nearly identical). However, if we take a look 
+at finding the alignment without cropping vs. using only the Sobel filter (no cropping), we see a big difference:
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2" style="text-align: center;"> onion_church.tif Alignment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;"><img width="1000" src="aligned_rgb_uncrop/onion_church.jpg"> No alignment </td>
+      <td style="text-align: center;"><img width="1000" src="onion_church_uncrop_sobel.jpg"> Alignment with Sobel filter only</td>
+    </tr>
+  </tbody>
+</table>
+
+Here, it's clear that the Sobel filter helped a lot, since even without cropping 
+we see a much better alignment than just using raw RGB values.
+
+
 #### Theory of the Sobel Filter
 
-The Sobel operator is basically a combination of two matrix convolutions between a matrix which 
-varies only vertically, and one that varies horizontally. 
-
+The Sobel operator is basically a combination of two matrix convolutions between a matrix which varies only vertically, and one that varies horizontally. [[Source]](https://en.wikipedia.org/wiki/Sobel_operator) 
 
 <p align="center">
   <img src ="sobel.png">
@@ -238,6 +288,7 @@ As a result of the convolution, G_x and G_y are matrices which detect vertical a
 <p align="center">
   <img src ="sobel-2.png" width="200">
 </p>
+
 this combined image now contains information about both the horizontal and vertical edges, creating the overall edge map for the RGB plates as seen above. This explains how the edge map is created, then we use the edge map just as we would the original RGB intensity plates to determine the optimal offset. 
 
 
