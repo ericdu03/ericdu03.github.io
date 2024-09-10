@@ -137,8 +137,60 @@ As expected, we see far less complexity in `church.tif` than `sculpture.tif`, co
 
 ### Aligned Images
 
-The aligned images are shown below, with the optimal alignment in a caption:
+The aligned images are shown below, with the optimal alignment in a caption and an associated runtime:
 
+<table>
+  <thead>
+    <tr>
+      <th colspan="2" style="text-align: center;"> JPEG images </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;"><img width="1000" src="aligned_rgb_cropped/cathedral.jpg"> Displacement: Red (6, 2), Green (2, 2) <br /> Runtime: 0.07 seconds</td>
+      <td style="text-align: center;"><img width="1000" src="aligned_rgb_cropped/monastery.jpg"> Displacement: Red (2, 2), Green (-2, 2) <br /> Runtime: 0.08 seconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img width="1000" alt="tobolsk" src="aligned_rgb_cropped/tobolsk.jpg"> Displacement: Red (6, 2), Green (2, 2) <br /> Runtime: 0.06 seconds</td>
+      <td style="text-align: center;"></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2" style="text-align: center;"> TIFF images </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;"><img width="1000" alt="church" src="./aligned_rgb_cropped/church.jpg">Displacement: Red (58, -4), Green (24, 0) <br /> Runtime: 4.78 seconds</td>
+      <td style="text-align: center;"><img width="1000" alt="emir" src="./aligned_rgb_cropped/emir.jpg">Displacement: Red (0, -1160), Green (48, 24) <br /> Runtime: 5.47 seconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img width="1000" alt="harvesters" src="./aligned_rgb_cropped/harvesters.jpg">Displacement: Red (124, 14), Green (60, 16) <br /> Runtime: 5.06 seconds</td>
+      <td style="text-align: center;"><img width="1000" alt="icon" src="./aligned_rgb_cropped/icon.jpg">Displacement: Red (90, 22), Green (40, 16) <br /> Runtime: 4.84 seconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img width="1000" alt="lady" src="./aligned_rgb_cropped/lady.jpg">Displacement: Red (116, 10), Green (54, 8) <br /> Runtime: 4.93 seconds</td>
+      <td style="text-align: center;"><img width="1000" alt="melons" src="./aligned_rgb_cropped/melons.jpg">Displacement: Red (178, 12), Green (82, 8) <br /> Runtime: 5.90 seconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img width="1000" alt="onion" src="./aligned_rgb_cropped/onion_church.jpg">Displacement: Red (108, 36), Green (52, 26) <br /> Runtime: 5.60 seconds</td>
+      <td style="text-align: center;"><img width="1000" alt="sculpture" src="./aligned_rgb_cropped/sculpture.jpg">Displacement: Red (140, -26), Green (34, -10) <br /> Runtime: 4.98 seconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img width="1000" alt="self portrait" src="./aligned_rgb_cropped/self_portrait.jpg">Displacement: Red (176, 36), Green (78, 28) <br /> Runtime: 5.16 seconds</td>
+      <td style="text-align: center;"><img width="1000" alt="three gen" src="./aligned_rgb_cropped/three_generations.jpg">Displacement: Red (112, 10), Green (54, 12) <br /> Runtime: 5.33 seconds</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img width="1000" alt="train" src="./aligned_rgb_cropped/train.jpg">Displacement: Red (88, 32), Green (42, 4) <br /> Runtime: 5.04 seconds</td>
+      <td style="text-align: center;"></td>
+    </tr>
+  </tbody>
+</table>
+ 
 ## Bells and Whistles
 
 In this section, I will go over the "Bells and Whistles" extra credit avenues I chose to explore for this project.  
@@ -152,7 +204,7 @@ goal of improving my metric instead became an exploration into what *other* metr
 One method I thought of was to try and line up the edges with each other, instead of lining up raw pixel RGB values. Theoretically, this is a much 
 better metric than raw RGB values, since contours are more structured than RGB intensities, making them more resistant to image mismatches. To do this, 
 I did some digging and found a filter called the **Sobel filter/operator**, which does exactly this. The Sobel operator takes in an image, and produces 
-an *edge map* - basically, it's a black and white image with the only edges of the image highlighted. Let's take `onion_church.tif` for instance:
+an *edge map* -- basically, it's a black and white image with the only edges of the image highlighted. Let's take `onion_church.tif` for instance:
 
 <p align="center">
     <img src="onion_church-rgb.png">
