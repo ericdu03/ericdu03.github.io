@@ -1,6 +1,4 @@
-## Project 1: Coloring the Prokudin-Gorskii Photo Collection
-
-<span style = "font-family=Papyrus; font-size:0.8em;"> 
+<!-- <span style = "font-family=Papyrus; font-size:0.8em;">  -->
 
 Sergey Prokudin-Gorskii (aka. Prokudin-Gorsky) was a Russian chemist and photographer. 
 From 1909 to 1915, he pioneered color photography with his three-plate 
