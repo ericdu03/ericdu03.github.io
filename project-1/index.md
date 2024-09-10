@@ -194,7 +194,7 @@ The aligned images are shown below, with the optimal alignment in a caption and 
 
 ### Other photos from the collection
 
-This section is mainly completely out of sheer curiosity, as I ran my algorithm on a couple of other images I found on the Library of Congress's website. I tried to find ones that I believed would be difficult for my algorithm to detect, due to the image complexity. These were all done using using the Sobel filter, see the next section for more details.
+As per the spec, we also have to run our algorithm through other photos in the collection. I tried to find ones that I believed would be difficult for my algorithm to detect, due to the image complexity. These were all done using using the Sobel filter, see the next section for more details.
 
 <table>
   <thead>
