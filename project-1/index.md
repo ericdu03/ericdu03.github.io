@@ -137,7 +137,7 @@ As expected, we see far less complexity in `church.tif` than `sculpture.tif`, co
 
 ### Aligned Images
 
-The aligned images are shown below, with the optimal alignment in a caption and an associated runtime:
+The aligned images are shown below, with the optimal alignment in a caption and an associated runtime. 
 
 <table>
   <thead>
@@ -221,7 +221,12 @@ the images look like when passed through a Sobel filter:
 We see very clearly the edge detection in action. In the filtered image, only the outlines of the church and the brushes are visible, and everything else
 is nearly pitch black. This is beneficial for us to get a better image, since smoother areas which are more prone to misalignment are zeroed out 
 after the filter, allowing our alignment to be more precise with less effort. 
+#### Therory of the Sobel Filer
 
+```math
+\mathbf{G}_x = \begin{bmatrix} 1 & 0 & -1 \\ 2 & 0 & -2\\1 & 0 & -1\end{bmatrix} 
+* \mathbf{A}
+```
 
 #### Limitations of the Sobel Filter
 
