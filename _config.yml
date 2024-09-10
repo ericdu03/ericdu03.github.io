@@ -21,7 +21,6 @@
 title: CS 180 Projects
 email: eric.du03@berkeley.edu
 description: >- # this means to ignore newlines until "baseurl:"
-  CS 180 project 1
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://ericdu03.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
