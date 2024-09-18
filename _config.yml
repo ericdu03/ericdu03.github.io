@@ -26,6 +26,7 @@ url: "https://ericdu03.github.io" # the base hostname & protocol for your site, 
 
 # Build settings
 theme: minima
+markdown: kramdown
 plugins:
   - jekyll-feed
 
