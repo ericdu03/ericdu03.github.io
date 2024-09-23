@@ -404,6 +404,19 @@ enthusiast, so I decided to blend together the white and the colored Hagoromo ch
 
 
 <p align="center">
+  <img src="part-2-images/chalk-blend.png"
+  width="500"
+  height = auto />
+</p>
+
+These images were taken on my phone, which has a native resolution of `3024 x 4032`,
+which when convolved with Gausisans would take far too long to compute (20+ mins per
+image), so I decided to downscale to `907 x 1210` using the `sk.transform.rescale()`
+function outlined in the previous project. Doing this cuts down the runtime from over
+15 minutes to roughly 1.5 minutes, which is much more manageable. Combining the
+blending:
+
+<p align="center">
   <img src="part-2-images/hagoromo-combined.png"
   width="500"
   height = auto />
@@ -415,14 +428,15 @@ computation to combine together, so this took very long to get right (~1 hour of
 tweaking). I'm quite happy with the result though, the alignment isn't bad and the
 horizontal mask does the blending of the two images very nicely. I also ran this with
 a bigger Gaussian (`sigma = 20`), which gave me this:
-
     
 <p align="center">
   <img src="part-2-images/hagoromo-combined-fat-gaussian.png"
   width="500"
   height = auto />
 </p>
-Honestly, there isn't much difference between the two. 
+Honestly, there isn't much difference between the two, and though in principle I do
+believe that if we used an *even larger* Gaussian that there would be a difference, I
+don't really have the computational power to find out. 
 
 I also used this image and tried doing an irregular mask, by replacing the middle
 chalk stick with the colored yellow stick. I used Adobe photoshop to get the
@@ -436,4 +450,6 @@ irregular mask, and this is what it looks like:
 
 This mask worked really well! There are still some shades of yellow around the
 edges of the chalk, but overall we see that the yellow chalk has been replaced by a
-white one.  
+white one. I think the edges are due to the uneven shape of the chalk sticks, as
+they're not completely identical (this is also apparent in the raw images), so
+so the masks won't overlap completely as they would in an ideal world.   
