@@ -41,8 +41,9 @@
   </header>
 
   <div class="post-content">
-    <p><span style="font-family=Papyrus; font-size:0.8em;"> 
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script></span></p>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<p><span style="font-family=Papyrus; font-size:0.8em;"></span></p>
 <h2 id="project-2-fun-with-filters-and-frequencies">Project 2: Fun with Filters and Frequencies</h2>
 
 <p>In this project, we explored filtering, image sharpening, among other things.</p>
@@ -88,7 +89,7 @@ can combine them in a pythagorean-like fashion to get a gradient magnitude:</p>
 
 <h4 id="the-cameraman-image">The “Cameraman” image</h4>
 
-<p>Now, let’s test this out on <code class="language-plaintext highlighter-rouge">cameraman.png</code>, by initializing \(\mathbf D_x\) and
+<p>Now, let’s test this out on <code class="language-plaintext highlighter-rouge">cameraman.png</code>, by initializing \(\mathbf D_x\) and 
 \(\mathbf D_y\) as numpy arrays and using <code class="language-plaintext highlighter-rouge">scipy.signal.convolve2d()</code> to help us:</p>
 
 <p align="center">
@@ -208,10 +209,241 @@ general all the edges present in the image seemed to have grown in intensity. Yo
 also see enhancement in the tiling on the pathway below as well. All of these features
 mentioned are in the high frequencies, as their patterns are dense and complex in the
 image. Therefore, it makes natural sense that these are the features that will be
-enhanced. We were also asked to do this with an image of our choice,</p>
+enhanced. We were also asked to do this with a couple images of our choice, so to
+connect with the previous project, I wanted to see what would happen if I tried
+sharpening the <code class="language-plaintext highlighter-rouge">cathedral.jpg</code> that we worked with last project, and here are the
+results:</p>
 
-<!-- pick one from camera lol -->
+<p align="center">
+  <img src="part-2-images/cathedral-sharp.png" />
+</p>
 
+<p>Overall, we see that all the lines in the image are more intense (darker), 
+which is particularly noticeable on the cathedral itself, as it’s design and shape 
+are full of high frequency features. I also decided to do this with an image from my
+own photo collection, here’s a macro image (with a DSLR) I took two years ago:</p>
+
+<p align="center">
+  <img src="part-2-images/flower-sharp.png" />
+</p>
+
+<p>One thing I noticed was how little the sharpening did to this image – as in it
+basically changed nothing, and I’m not entirely sure why. One possibility is that the
+image is <em>too</em> high quality and doesn’t have much to sharpen, but in my view this is
+unsatisfactory because the sharpening process should make high frequency changes
+<em>more</em> apparent, regardless of their initial resolution. One thing I ruled out was
+the size of my filter, as I ran the image on a 100x100 filter to see if it was
+because my filter size was too small, and I may be coping but the image may have
+turned out <em>slightly</em> clearer:</p>
+
+<p align="center">
+  <img src="part-2-images/flower-sharp-bigfilter.png" />
+</p>
+<p>Honestly I have no idea, I ran this for 15 minutes and am desperate for any
+indication that the sharpening did anything to my image. I also want to point out
+that I tried this with other macro shots of flowers, and using the sharpening tool on
+Lightroom (as a preview to see if my sharpening does anything) I found no change in
+almost all the images.</p>
+
+<p>Anyways, with that aside, the last part of this section asked us to take an image,
+blur it, then sharpen it back again. I did this with the <code class="language-plaintext highlighter-rouge">cathedral.jpg</code> we saw
+earlier, and this is what I get:</p>
+
+<p align="center">
+  <img src="part-2-images/cathedral-sharp-after-blurring.png" />
+</p>
+
+<p>Comparing the original to the sharpened image, we see that many of the high
+frequency features have returned in the image as expected. Compared to the original
+image the outlines are darker, similar to the result we got from just sharpening.
+These darker lines are actually expected – because the blurred image has completely
+taken away some high frequency components, the part of the image we are adding back
+via sharpening is the highest frequency that <em>wasn’t</em> taken away by the blurring,
+which is certainly lower than what was taken away. As a result, there should be no
+expectation that the sharpened image should look identical to the original image.</p>
+
+<h2 id="hybrid-images">Hybrid Images</h2>
+
+<p>Now we turn to creating hybrid images, which is the product of stacking the high
+frequency components of one image onto the low frequency components of another. The
+combined image then contains different features from both images. The combined image
+has the property that when we look from afar, we see the low-frequencies only, but
+from up close we see only the high frequencies. This phenomenon takes advantage of
+our eyes’ limited ability to perceive high frequencies from a distance, and as
+a result the high frequency components of the image are completely washes away.</p>
+
+<p>To test, I did this on the provided images <code class="language-plaintext highlighter-rouge">DerekPicture.jpg</code> and <code class="language-plaintext highlighter-rouge">nutmeg.jpg</code>,
+passing the former through a low-pass filter to keep only the low frequencies and
+subtracting the low frequencies out of the latter to keep only the high frequencies.
+This process was done by passing <code class="language-plaintext highlighter-rouge">nutmeg.jpg</code> through a low pass filter and
+subtracting the result off of the original image. Doing so, I get this:</p>
+
+<p align="center">
+  <img src="part-2-images/derek-aligned.png" width="500" height="auto" />
+</p>
+
+<p>We can see the outline of the cat from up close, but from afar all we see is Derek,
+as expected. The cat was a little hard to see in the final image, so I intentionally
+boosted the image by multiplying all the cat pixel values by 3, which seemed to do a
+really good job at making the cat seem more apparent.</p>
+
+<h3 id="other-images">Other images</h3>
+
+<p>As for some other images I tried, this is one I really liked:</p>
+
+<p align="center">
+  <img src="part-2-images/cat-loaf-combined.png" width="500" height="auto" />
+</p>
+<p>Sadly I don’t own a cat so I had to take a stock cat and bread images for this one :(</p>
+
+<p>Anyways, this is the one hybrid image that turned out the best for me, so this is the
+one I decided to run the FFT plots on:</p>
+
+<p align="center">
+  <img src="part-2-images/catloaf-fft.png" width="700" height="auto" />
+</p>
+
+<p>From the FFT plots it’s very clear to see the effects of the computations we’re
+doing, especially in the FFT for the blurred bread image, as we see that the
+convolution has killed all the high frequency images and only left the low frequency
+ones. On the flip side, it’s apparent that the high pass filter also worked really
+well, since the high frequencies are much stronger in the filtered image compared to
+the original. The combined image is naturally a combination of these two, nothing
+much to comment on there.</p>
+
+<p>Along the way, I also encountered some failure cases. Generally, I found that
+failures would occur when the overall features of both images were vastly different,
+or too similar. For instance, here’s a failure case of an among us overlaid with a
+kidney bean (credit to my roommate for coming up with this idea, I thought it was
+kinda funny so I did it):</p>
+
+<p align="center">
+  <img src="part-2-images/amongus-failure.png" width="500" height="auto" />
+</p>
+
+<p>The image aligns pretty well for the most part, except it’s still possible to tell
+the bean apart from the background among us character because the shapes of both
+objects don’t match as well as the cat and also Derek from earlier. This image also
+has the high frequency components boosted by 10x, so that it would be visible in the
+composite image. Although this was a failure, I did notice something: that when I
+turned the image into grayscale, the high frequency bean seemed to jump out at me
+more than the color image, which leads me to suspect that the incorporation of color
+actually enhances the low-frequency image more than the high frequency image. This is
+evidenced below, when we compare the images together:</p>
+
+<p align="center">
+  <img src="part-2-images/amongus-comparison.png" width="600" height="auto" />
+</p>
+
+<p>It seems that when we make the low frequency image to be grayscale, the high
+frequency bean pops out a lot more compared to the original, and making the high
+frequency into grayscale doesn’t seem to do much to the image. I don’t know if
+there’s a biological reason for why this is, but empirically speaking it just seems
+that I can see the bean from much farther away when the background is grayscale
+compared to when it’s not.</p>
+
+<h3 id="laplacian-stack-blending">Laplacian Stack, Blending</h3>
+
+<p>Here, we replicate the process outlined by Burt and Adelson (1983) for blending two
+images together. Obviously, we could just take the left half of one image and
+concatenate it to the right half, but this would lead to a very sharp “jump” from one
+image to the other that it doesn’t give us a pleasant result. We could also try naive 
+alpha blending, but as described in lecture this gives a bad result because we will
+experience “ghosting”, or basically the low frequency features of one image bleed
+into the other.</p>
+
+<p>The reason this ghosting occurs is because with the naive alpha blending approach,
+there is no single suitable window that can both blend the high frequency components
+nicely and also wash out the low frequency ones. As a result, no matter what blending
+window you choose, there will always be artifacts. One fix they suggest is to blend
+in layers, by using a <em>Laplacian stack</em>. Unlike a Gaussian stack (which is
+implemented by successively taking the Gaussian kernel), each image in the Laplacian
+stack contains the part of the image in a specific range of frequencies only. This is
+done by taking the difference between consecutive images in the Gaussian stack.</p>
+
+<p>Now, we can properly “alpha blend” the images together, by blending the images in the
+Laplacian stacks together, then combine both at the end. This process is now possible
+due to the limited range of frequencies in each Laplacian stack image, thereby
+allowing us to choose an appropriate blending window. As a preliminary, I did this on
+the apple and orange image, which gave me these results:</p>
+
+<p align="center">
+  <img src="part-2-images/apple-stack.png" width="500" height="auto" />
+
+  <img src="part-2-images/orange-stack.png" width="500" height="auto" />
+
+  <div align="center"> Gaussian and Laplacian stacks for apple and orange pictures.
+  The top image is for the apple, the bottom image is for the orange. </div> 
+</p>
+
+<p>Overall, I think this part turned out quite nicely. One thing to note is that the
+last image of the Laplacian stack is the same as the last image of the Gaussian
+stack; this is intentional, since the last image is supposed to contain the lowest
+frequency components. Throughout this process, the only major hiccup I came across
+was normalizing the Laplacian stack images so that the images were visible, otherwise
+they would be nearly completely black.</p>
+
+<h3 id="blending">Blending</h3>
+
+<p>To implement the blending process, we use a mask which is just a 2D array full of
+ones on one half, and zeros on the other. This was generated using <code class="language-plaintext highlighter-rouge">np.ones()</code> and
+<code class="language-plaintext highlighter-rouge">np.zeros()</code> of the appropriate dimensions. Visually, as an image, this mask is just
+white on one side and black on the other, and we successively convolve this with a
+Gaussian filer to smooth out the boundary, which is our blending window:</p>
+
+<p align="center">
+  <img src="part-2-images/mask.png" width="500" height="auto" />
+</p>
+
+<p>To choose the blending window, I just convolved the mask with a Gaussian kernel, of
+the same length and <code class="language-plaintext highlighter-rouge">sigma</code> as the ones I used to generate the Gaussian and Laplacian
+stacks. I did this for consistency’s sake, so that the highest frequency I’d be
+blending would correspond to the highest frequency present in the mask, ensuring that
+there’d be no ghosting. Applying this mask to the corresponding image in the Laplacian stack,  blending them together, and collapsing the stack, we end up with this final image for the 
+oraple:</p>
+
+<p align="center">
+  <img src="part-2-images/oraple.png" width="500" height="auto" />
+</p>
+
+<p>One thing I did do differently than what was taught in lecture was that I used a
+filtered version of the first mask for the highest frequency layer, as I found that
+without doing this it would still leave a noticeable seam in the image. This also
+makes sense intuitively, since a step function effectively has infinite frequency,
+and thus you’d get seams regardless of the frequencies in your image.</p>
+
+<h2 id="other-blending-images">Other Blending Images</h2>
+
+<p>Here’s some other images I blended together. Starting off, I’m a very big blackboard 
+enthusiast, so I decided to blend together the white and the colored Hagoromo chalk together:</p>
+
+<p align="center">
+  <img src="part-2-images/hagoromo-combined.png" width="500" height="auto" />
+</p>
+
+<p>When making this image, the alignment of the individual chalk sticks was not easy,
+and this took multiple tries to get right. Each image also took over a minute of
+computation to combine together, so this took very long to get right (~1 hour of
+tweaking). I’m quite happy with the result though, the alignment isn’t bad and the
+horizontal mask does the blending of the two images very nicely. I also ran this with
+a bigger Gaussian (<code class="language-plaintext highlighter-rouge">sigma = 20</code>), which gave me this:</p>
+
+<p align="center">
+  <img src="part-2-images/hagoromo-combined-fat-gaussian.png" width="500" height="auto" />
+</p>
+<p>Honestly, there isn’t much difference between the two.</p>
+
+<p>I also used this image and tried doing an irregular mask, by replacing the middle
+chalk stick with the colored yellow stick. I used Adobe photoshop to get the
+irregular mask, and this is what it looks like:</p>
+
+<p align="center">
+  <img src="part-2-images/hagoromo-irregular-mask1.png" width="500" height="auto" />
+</p>
+
+<p>This mask worked really well! There are still some shades of yellow around the
+edges of the chalk, but overall we see that the yellow chalk has been replaced by a
+white one.</p>
 
   </div>
 
