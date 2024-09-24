@@ -47,6 +47,9 @@ can combine them in a pythagorean-like fashion to get a gradient magnitude:
 
 $$\nabla = \sqrt{\mathbf D_x^2 + \mathbf D_y^2}$$
 
+We can then visually inspect the plot of the gradient magnitude to see the edges in
+the image, which we will do below. 
+
 #### The "Cameraman" image
 
 Now, let's test this out on `cameraman.png`, by initializing $$\mathbf D_x$$ and 
@@ -107,25 +110,21 @@ convolutions as before, and this is what we get:
   <div align="center"> Side by side of the gradient magnitude with and without the
   Gaussian filter.   </div> 
 </p>
-
-It's difficult to see, but it is clear after staring at this image for a while that
-the intensity of the lines on the right image are smaller than that of the left. This
-makes sense, since the Gaussian basically computes an average over a window, so of
-course things will reduce in intensity. The more obvious difference between the two
-images is that the image on the right is much smoother than that on the left, and is
-a direct result of us applying the Gaussian filter. 
+One thing we immediately notice is that the intensity of the lines on the right are
+higher than that on the left. This is somewhat expected, since the Gaussian filter
+takes an average over the surrounding pixels, so each pixel value is boosted by the
+values around it. The more obvious difference between the two images is that the one
+on the right has smoother edges, which is also visually pleasing in my opinion, and
+is a direct result of the Gaussian filter. 
 
 It's also important to mention that the parameters we choose for the Gaussian filter
 have a *huge* effect on the resulting image. For the image above, I chose $$\sigma =
 0.7$$, which gave a smoothed image where we can still resolve the edges. But, if we
-choose a larger $$\sigma$$, say $$\sigma = 2$$, we lose the edges because now the
-image is too smooth:
+choose a larger $$\sigma$$, say $$\sigma = 2$$, the edges become extremely faint and
+the image is now too smooth:
 
 <p align="center">
   <img src="part-1-images/blurred-sigma=2.png" />
-
-  <div align="center"> Side by side of the gradient magnitude with and without the
-  Gaussian filter.   </div> 
 </p>
 
 This method involved us making the Gaussian filter, convolving the image with it, and
@@ -135,12 +134,17 @@ with the two derivative filters, then taking the convolution along their respect
 direction. We then combine them together, and we get:
 
 <p align="center">
-  <img src="part-1-images/blurred-DoG.png" />
+  <img src="part-1-images/DoG-result.png" />
 </p>
-One thing that immediately jumped out at me was just how less intense this image was
-compared to the other one, and I can't really explain why. In principle there
-shouldn't be a difference between either method, but apparently that's what we see. 
+The approaches look identical, and comparing them side by side that's also what we
+see:
 
+<p align="center">
+  <img src="part-1-images/gradient-mag-compare.png" />
+</p>
+
+This result is exactly what we expect, since the convolution operation is associative
+so it shouldn't matter which order we convolve things in.
 
 ### Image Sharpening
 
@@ -280,6 +284,7 @@ well, since the high frequencies are much stronger in the filtered image compare
 the original. The combined image is naturally a combination of these two, nothing
 much to comment on there. 
 
+#### Failure Case
 
 Along the way, I also encountered some failure cases. Generally, I found that
 failures would occur when the overall features of both images were vastly different,
@@ -293,9 +298,12 @@ kinda funny so I did it):
   height = auto />
 </p>
 
-The image aligns pretty well for the most part, except it's still possible to tell
-the bean apart from the background among us character because the shapes of both
-objects don't match as well as the cat and also Derek from earlier. This image also
+The image aligns pretty well for the most part, except that it's still possible to tell
+the bean apart from the background among us character because of the differing
+shapes, making the high frequency components still visible. This is also probably
+exacerbated by the fact that the background of the among us is white (featureless),
+and as a result the sharp edge of the kidney bean really sticks out against the
+backdrop. This image also
 has the high frequency components boosted by 10x, so that it would be visible in the
 composite image. Although this was a failure, I did notice something: that when I
 turned the image into grayscale, the high frequency bean seemed to jump out at me
@@ -378,10 +386,11 @@ Gaussian filer to smooth out the boundary, which is our blending window:
 </p>
 
 To choose the blending window, I just convolved the mask with a Gaussian kernel, of
-the same length and `sigma` as the ones I used to generate the Gaussian and Laplacian
+the same length and $$\sigma$$ as the ones I used to generate the Gaussian and Laplacian
 stacks. I did this for consistency's sake, so that the highest frequency I'd be
 blending would correspond to the highest frequency present in the mask, ensuring that
-there'd be no ghosting. Applying this mask to the corresponding image in the Laplacian stack,  blending them together, and collapsing the stack, we end up with this final image for the 
+there'd be no ghosting. Applying this mask to the corresponding image in the Laplacian stack,  
+blending them together, and collapsing the stack, we end up with this final image for the 
 oraple:
  
 <p align="center">
@@ -399,9 +408,42 @@ and thus you'd get seams regardless of the frequencies in your image.
  
 ## Other Blending Images
    
-Here's some other images I blended together. Starting off, I'm a very big blackboard 
-enthusiast, so I decided to blend together the white and the colored Hagoromo chalk together:
+Here's some other images I blended together. Starting off, I took inspiration from
+the lecture slides and saw some images of tiling, so I thought I'd try my hand at
+doing some blending with two different tiling patterns as well. Recently, I learned
+about the aperiodic monotile, a pattern that tiles the plane using only a single
+tile, without repeats! The figure below shows the process: the first two images are
+the original images, and the third and fourth are the blended results:
 
+
+<p align="center">
+  <img src="part-2-images/tiling-blended.png"
+  width="800"
+  height = auto />
+</p>
+
+I still got some ghosting in my image at the seam, but I honestly think that a little
+bit of ghosting is unavoidable when the images are so different, as in this case. One
+thing I did experiment with was the effect of color on this image, and I found that
+the ghosting is much more apparent in the color image when compared to the grayscale. 
+I think this is because the color makes the images pop out more (especially the
+blues), which makes the ghosting more apparent. 
+
+I'm also very big blackboard enthusiast, so I decided to blend together the white and 
+the colored Hagoromo chalk together:
+
+<p align="center">
+  <img src="part-2-images/chalk-blend.png"
+  width="500"
+  height = auto />
+</p>
+
+These images were taken on my phone, which has a native resolution of `3024 x 4032`,
+and when convolved with the Gausisans this would take far too long to compute (20+ mins per
+image), so I decided to downscale to `907 x 1210` using the `sk.transform.rescale()`
+function outlined in the previous project. Doing this cuts down the runtime from over
+15 minutes to roughly 1.5 minutes, which is much more manageable. Combining the
+blending:
 
 <p align="center">
   <img src="part-2-images/hagoromo-combined.png"
@@ -415,14 +457,17 @@ computation to combine together, so this took very long to get right (~1 hour of
 tweaking). I'm quite happy with the result though, the alignment isn't bad and the
 horizontal mask does the blending of the two images very nicely. I also ran this with
 a bigger Gaussian (`sigma = 20`), which gave me this:
-
     
 <p align="center">
   <img src="part-2-images/hagoromo-combined-fat-gaussian.png"
   width="500"
   height = auto />
 </p>
-Honestly, there isn't much difference between the two. 
+Honestly, there isn't much difference between the two, and though in principle I do
+believe that if we used an *even larger* Gaussian that there would be a difference, I
+don't really have the computational power or the patience to find out. 
+
+#### Irregular mask
 
 I also used this image and tried doing an irregular mask, by replacing the middle
 chalk stick with the colored yellow stick. I used Adobe photoshop to get the
@@ -430,10 +475,12 @@ irregular mask, and this is what it looks like:
 
 <p align="center">
   <img src="part-2-images/hagoromo-irregular-mask1.png"
-  width="500"
+  width="800"
   height = auto />
 </p>
 
 This mask worked really well! There are still some shades of yellow around the
 edges of the chalk, but overall we see that the yellow chalk has been replaced by a
-white one.  
+white one. I think the edges are due to the uneven shape of the chalk sticks, as
+they're not completely identical (this is also apparent in the raw images), so
+so the masks won't overlap completely as they would in an ideal world.   
