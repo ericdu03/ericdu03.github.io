@@ -292,9 +292,17 @@ or too similar. For instance, here's a failure case of an among us overlaid with
 kidney bean (credit to my roommate for coming up with this idea, I thought it was
 kinda funny so I did it):
 
+
+<p align="center">
+  <img src="part-2-images/amongus-source.png"
+  width="500"
+  height = auto />
+</p>
+
+
 <p align="center">
   <img src="part-2-images/amongus-failure.png"
-  width="500"
+  width="350"
   height = auto />
 </p>
 
