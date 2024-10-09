@@ -100,11 +100,11 @@ a conscious decision.
 
 <p align="center">
   <img src="images/morph.gif" />
-  <div align="center"> Morphing between George Clooney and Robert Deniro. (This gif
-  is not looped, so you'll have to reload the webpage and you should see the
-  animation.) </div> 
+  <div align="center"> Morphing between George Clooney and Robert Deniro.</div> 
 </p>
 
+Github pages doesn't allow me to show gifs this large, so you'll either have to
+download it or view it using [this link.](https://youtu.be/rseHAT1-zbU) 
 Here, we can see the differences between the two images more clearly, and the
 transformation from one to the other also tells us that the differences we noticed in
 the previous section were real and a result of the morphing, not a visual illusion.
