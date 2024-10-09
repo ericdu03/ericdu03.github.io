@@ -104,7 +104,7 @@ a conscious decision.
 </p>
 
 Github pages doesn't allow me to show gifs this large, so you'll either have to
-download it or view it using [this link.](https://youtu.be/rseHAT1-zbU) 
+download it or view it using [this link.](https://youtu.be/L82VoHGpctw) 
 Here, we can see the differences between the two images more clearly, and the
 transformation from one to the other also tells us that the differences we noticed in
 the previous section were real and a result of the morphing, not a visual illusion.
