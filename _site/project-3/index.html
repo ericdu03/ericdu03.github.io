@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>CS 180 Projects</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="CS 180 Projects" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/project-3/" />
+<meta property="og:url" content="http://localhost:4000/project-3/" />
+<meta property="og:site_name" content="CS 180 Projects" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="CS 180 Projects" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","headline":"CS 180 Projects","url":"http://localhost:4000/project-3/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="CS 180 Projects" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">CS 180 Projects</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <div class="post-content">
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<p><span style="font-family=Papyrus; font-size:0.6em;"></span></p>
+
+<h2 id="project-3-face-morphing">Project 3: Face Morphing</h2>
+
+<p>In this project, our focus was to learn how to “morph” and transform features from
+one image to another, by mapping corresponding keypoints of both images.</p>
+
+<h3 id="part-1-defining-correspondences">Part 1: Defining Correspondences</h3>
+
+<p>To start, I used the <code class="language-plaintext highlighter-rouge">george.jpg</code> image that was given to us initially, and I also
+chose to use another one of Martin Schoeller’s pictures of Robert Deniro (named
+<code class="language-plaintext highlighter-rouge">deniro.jpg</code> as my second picture. Then, I used the labeling tool provided to us in
+the project spec in order to perform this part.</p>
+
+<p>For this part, I defined a total of 38 pairs of points aligning sailing 
+features on both faces, then exported them to a <code class="language-plaintext highlighter-rouge">.json</code> file. Then, I defined a
+triangulation on these points, by using <code class="language-plaintext highlighter-rouge">scipy.spatial.Delaunay</code> to generate the
+triangular mesh that I would be using to compute the transform (this is explained in
+further detail in the next section)</p>
+
+<p>As a visual, below are the two original images, with the corresponding points
+overlaid on top of them:</p>
+
+<p align="center">
+  <img src="images/points_display.png" />
+
+  <div align="center"> Display showing the matched points on both images. </div> 
+</p>
+
+<h3 id="part-2-computing-the-mid-way-face">Part 2: Computing the “Mid-way Face”</h3>
+
+<p>To compute the midway face, I took the corresponding points of both <code class="language-plaintext highlighter-rouge">deniro.jpg</code> and
+<code class="language-plaintext highlighter-rouge">george.jpg</code> given to me by the correspondence tool, and computed the average between
+these two to get the average location of the facial features. Then, I computed a
+triangular mesh over this average space using <code class="language-plaintext highlighter-rouge">scipy.spatial.Delaunay</code>.</p>
+
+<p>Then, we move on to computing the transformation matrix. I found <a href="https://edstem.org/us/courses/64731/discussion/5354090?comment=12463385">Bill’s comment on
+ed</a> to be
+particularly helpful in developing the theory behind generating the matrix \(A\). In
+summary, we effectively want to find a matrix \(A\) such that:</p>
+
+\[\begin{bmatrix} a &amp; b &amp; c\\ d &amp; e &amp; f \\ 0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix}
+x \\ y \\ 1 \end{bmatrix} = \begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix}\]
+
+<p>where \((x, y)\) are the coordinates in the original image, and 
+\((x', y')\) are our coordinates in the mean image. In our case, we do this for every
+triangle in our image, and apply the same transformation to every point in the
+triangle. To find the matrix \(A\), we then effectively just have to solve a large
+system of equations, since we have the above relation for the three corners of our
+triangle. This process can effectively be boiled down to solving the following linear
+equation:</p>
+
+\[\begin{bmatrix} p_{x_1} &amp; p_{y_1} &amp; 1 &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; 0 &amp; p_{x_1} &amp; p_{y_1}
+&amp; 1 \\ p_{x_2} &amp; p_{y_2} &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; p_{x_2} &amp; p_{y_2} &amp; 1 \\
+p_{x_3} &amp; p_{y_3} &amp; 1 &amp; 0 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; 0 &amp; p_{x_3} &amp; p_{y_3} &amp; 1 \end{bmatrix} 
+\begin{bmatrix}
+a\\b\\c\\d\\e\\f \end{bmatrix} = \begin{bmatrix} q_{x_1} \\ q_{y_1}\\ q_{x_2} \\
+q_{y_2} \\ q_{x_3} \\ q_{y_3} \end{bmatrix}\]
+
+<p>which will give us the values of \(a\) through \(f\).<br />
+This can be solved using <code class="language-plaintext highlighter-rouge">np.linalg.solve(a, b)</code>, which finds these values. With
+\(A\) found, we now turn to the implementation of the transformation onto the image.</p>
+
+<p>Now, consider one triangle in the mean image, for which we have the transformation
+matrix \(A\) between it and its corresponding triangle in the original image. To fill
+in the color values, we first find the coordinates of every pixel within the
+triangle, and use \(A^{-1}\) to determine the corresponding point in the original
+image. Once this is found, we can use <code class="language-plaintext highlighter-rouge">scipy.interpolate.RegularGridInterpolator()</code> to
+perform a nearest-neighbor interpolation, telling us the color value of the pixel in
+the mean image. We do this for each color channel separately, and combine them
+together to get the morphed image. Doing so, we get the following results:</p>
+
+<p align="center">
+  <img src="images/george_midway.png" />
+  <img src="images/deniro_midway.png" />
+  <div align="center"> Original and Morphed results for both images. </div> 
+</p>
+
+<p>Due to the similarity in both images, it’s not very easy to tell that the morph
+actually had a noticeable effect on the original images. However, there are some
+small differences that you can notice: in the morphed image, George’s left eye (his
+left) looks smaller, and the overall face shape seems to be more narrow. On the
+contrary, we can see somewhat the opposite effects on Robert, as his face seems to
+have gotten slightly wider. To see these differences more clearly, we turn to the
+next section.</p>
+
+<h3 id="part-3-the-morph-sequence">Part 3: The Morph Sequence</h3>
+
+<p>Here, we turn to creating a morph sequence, which just shows the progression from one
+image to the other. In doing so, we can also highlight the differences between the
+images more clearly, and also the differences between the original images and the
+midway image. To do this, we repeatedly compute a weighted midway image between the
+two images, and also cross-dissolve the image colors together to produce a sequence
+of midway images. Then, these are all combined together to create a <code class="language-plaintext highlighter-rouge">.gif</code>, displayed
+below. Note that in my implementation, I let <code class="language-plaintext highlighter-rouge">warp_frac</code> and <code class="language-plaintext highlighter-rouge">dissolve_frac</code> (the two
+parameters which control the warp and dissolve rates) equal the same value, which was
+a conscious decision.</p>
+
+<p align="center">
+  <img src="images/morph.gif" />
+  <div align="center"> Morphing between George Clooney and Robert Deniro. (This gif
+  is not looped, so you'll have to reload the webpage and you should see the
+  animation.) </div> 
+</p>
+
+<p>Here, we can see the differences between the two images more clearly, and the
+transformation from one to the other also tells us that the differences we noticed in
+the previous section were real and a result of the morphing, not a visual illusion.</p>
+
+<h3 id="part-4-average-population-face">Part 4: Average Population Face</h3>
+
+<p>In this section, we compute the average face of a large collection of portraits. For
+this part, I chose to use the FEI database, and I specifically chose to use a subset
+of the data – specifically, only smiling men. To determine the images we need, we
+manually sift through the total database of images to determine which images match
+our criteria, then get the corresponding points for them. (I do have to credit Steven
+Luo with going through and finding the indices that corresponded to males in the database; 
+we only shared the index information, no computational code was shared.)  With all the points
+gathered, we can compute a mean face by taking the average of all the feature
+points, and performing the morph on some of the images to the mean face, we get this:</p>
+
+<p align="center">
+  <img src="images/mean_face_examples.png" />
+  <div align="center"> Examples of morphing selected samples onto the mean face.</div> 
+</p>
+
+<p>Then, we can simply take the average of all these mean images, in order to come to an
+image of the mean smiling face, which is pictured below:</p>
+
+<p align="center">
+  <img src="images/mean_face.png" />
+  <div align="center"> Examples of morphing selected samples onto the mean face.</div> 
+</p>
+
+<p>The last part of this task is to perform the same morph using a photo of me. The
+image I took of myself that I used for the previous part is a resting face, so I
+decided instead of taking another photo of myself (I <em>really</em> don’t like taking photos of myself),
+I’ll just process the resting faces as well and morph to that instead. So, I took the
+following set of correspondences between my resting face and the average resting face
+(computed in the same way as in the previous part):</p>
+
+<p align="center">
+  <img src="images/mean_corresponding_points.png" />
+  <div align="center"> Examples of morphing selected samples onto the mean face.</div> 
+</p>
+
+<p>Then, we can just compute the morph using the same <code class="language-plaintext highlighter-rouge">compute_midway</code> function that
+I’ve implemented in part 2, giving us:</p>
+
+<p align="center">
+  <img src="images/morph_to_mean.png" />
+  <div align="center"> Morphing my face onto the mean resting face and also vice
+  versa.</div> 
+</p>
+
+<p>To be honest, the distortions make sense, since my face does not really resemble the
+mean face computed at all – the ethnicity of the selected people were Brazilian, and
+obviously I’m not, so there should be no expectation that our face structures line up
+well. As a result, we get some serious warping between the two. I also verified that
+adding more correspondence points doesn’t really seem to help that much.</p>
+
+<h3 id="part-5-extrapolating-from-the-mean">Part 5: Extrapolating from the Mean</h3>
+
+<p>To create the caricature, what we need to do is essentially control how much of the
+mean face we are using when extrapolating my face. In other words, we have a variable
+<code class="language-plaintext highlighter-rouge">alpha</code> that controls how much of the morph shifts in the direction of the mean
+image. An <code class="language-plaintext highlighter-rouge">alpha</code> value of <code class="language-plaintext highlighter-rouge">0</code> means no morphing, an alpha of <code class="language-plaintext highlighter-rouge">1</code> means to morph
+exactly into the mean image. This is reflected in the image below:</p>
+
+<p align="center">
+  <img src="images/caricature.png" />
+  <div align="center"> Extrapolation of my face onto the mean face. </div> 
+</p>
+
+<p>Just like the previous part, this extrapolation of my face using the mean does
+distort my face, which makes sense since we already talked earlier about how my face
+doesn’t really match the mean face well.</p>
+
+<h3 id="bells-and-whistles-changing-ethnicity">Bells and Whistles: Changing Ethnicity</h3>
+
+<p>For the Bells and Whistles part, I decided to try and morph my face onto that of an
+average Korean man. For this part, I needed another image of myself, and luckily I
+dug up an old passport photo I took and used that for this part. If you’re wondering
+why I didn’t do this for earlier parts, that’s because I completely forgot this photo
+existed until I started this section. Anyways, here are the original images I worked
+with:</p>
+
+<p align="center">
+  <img src="images/ethnicity_before.png" />
+</p>
+
+<p>And here’s what I ended up with:</p>
+
+<p align="center">
+  <img src="images/ethnicity_after.png" />
+</p>
+
+<p>For these images I used <code class="language-plaintext highlighter-rouge">warp_frac = 0.6</code> and <code class="language-plaintext highlighter-rouge">dissolve_frac = 0.6</code>, instead of
+maxing them out. The reason for this was that I found this gave a better blending of
+the two images. I also shouldn’t turn it all the way either, since that would just be
+a pure warping anyways.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 180 Projects</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">CS 180 Projects</li><li><a class="u-email" href="mailto:eric.du03@berkeley.edu">eric.du03@berkeley.edu</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
