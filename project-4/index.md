@@ -22,10 +22,18 @@ project:
   <img src="images/physics-2-resize.jpg" 
   width = "300"/>
 </p>
+
+<p align="center">
+    <img src = "images/physics251-1.JPG" width = "300"/>
+    <img src = "images/physics251-2.JPG" width = "300"/>
+</p>
+
+<p align="center">
+    <img src = "images/physics251-4.JPG" width = "300"/>
+    <img src = "images/physics251-5.JPG" width = "300"/>
+</p>
 These were images I took on my phone, and then rescaled to a smaller size to make the
 computation faster. 
-
-I also took some using my DSLR camera, shown below:
 
 
 ### Part 2: Computing Homography
@@ -128,7 +136,7 @@ shallower angle than the textbook, and as a result the corresponding warp distor
 the upper region much more heavily, to the point where the chalk case almost can't be
 seen. That said, these images are evidence that the rectification procedure does
 indeed work, since the resulting objects (the chalk case and the textbook) both
-appear square in the final image.
+appear square in the warped image. 
 
 #### Creating a Mosaic
 
@@ -165,38 +173,25 @@ some `[x, y]`, then `im1_high[x, y]` was taken, and vice versa.
 
 Finally, we add the low and high frequency components together, in the same way we
 collapsed the Laplacian stack in Project 2. Taking the images
-from the physics building, defining the corresponding points, we can get the
-following image stitching:  
+from the physics building (source images are at the top of the page),
+defining the corresponding points, we can get the
+following image stitchings:  
  
 <p align="center">
-    <img src = "images/physics-mosaic1.png" width = "400"/>
+    <img src = "images/physics-mosaic1.png" width = "300"/>
+    <img src = "images/physics251-mosaic.png" width = "300"/>
+
+  <div align="center"> Left: stitched images of the physics reading room. </div>
+  <div align = "center"> Right: stitched images of physics 251, one of my go-to 
+  spots for studying.  </div>
 </p>
 
-I also took some photos of Physics 251, one of the quiet spots in physics that I like
-to go to for studying: 
-
-<p align="center">
-    <img src = "images/physics251-1.JPG" width = "300"/>
-    <img src = "images/physics251-2.JPG" width = "300"/>
-</p>
-
-And here's the stitched image:
-
-<p align="center">
-    <img src = "images/physics251-mosaic.png" width = "400"/>
-</p>
-
-And another of 251, from a different angle:
-
-<p align="center">
-    <img src = "images/physics251-4.JPG" width = "300"/>
-    <img src = "images/physics251-5.JPG" width = "300"/>
-</p>
-
-Stitched:
 
 <p align = "center">
     <img src = "images/physics251-mosaic2.png" width = "400"/>
+
+  <div align="center"> Also a stitched image of Physics 251, just a different part of
+  the room. </div>
 </p>
 
 Unfortunately, you can't read the text on that poster, because I downscaled the
