@@ -267,12 +267,6 @@ direction, and for a corner you’d expect to see a change in <em>all</em> direc
 Leveraging this differentiation is the key to unlocking the underlying mechanism of
 the Harris filter.</p>
 
-<p>The Harris filter then generates a matrix \(M\) defined as:</p>
-
-\[M = \sum \begin{bmatrix} I_x^2 &amp; I_x I_y \\ I_x I_y &amp; I_y^2 \end{bmatrix}\]
-
-<!-- come back to this if you have time lol -->
-
 <p>For our purposes, the Harris filter was given to us as the <code class="language-plaintext highlighter-rouge">get_harris_corners()</code>
 function, which is what I used to get the Harris interest points. The function
 returns a list of <code class="language-plaintext highlighter-rouge">corners</code>, as well as the intensity of the Harris map <code class="language-plaintext highlighter-rouge">h</code> at the
