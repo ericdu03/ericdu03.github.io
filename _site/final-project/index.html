@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>CS 180 Projects</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="CS 180 Projects" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/final-project/" />
+<meta property="og:url" content="http://localhost:4000/final-project/" />
+<meta property="og:site_name" content="CS 180 Projects" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="CS 180 Projects" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","headline":"CS 180 Projects","url":"http://localhost:4000/final-project/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="CS 180 Projects" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">CS 180 Projects</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <div class="post-content">
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<p><span style="font-family=Papyrus; font-size:0.8em; margin = 1in"></span></p>
+
+<h2 id="final-project-light-field-camera">Final Project: Light field Camera</h2>
+
+<p>In this final project, I chose to implement two of the precanned projects: light field camera and gradient domain fusion.</p>
+
+<h3 id="part-1-light-field-camera">Part 1: Light Field Camera</h3>
+
+<p>The entire objective of this project is to explore how taking multiple images of the same scene but from very
+slightly different angles. Then, combining these images together in a clever way allows us to form a
+composite image that has vastly different properties. Here, we explore two such properties: the location of
+focus and also the aperture of the image.</p>
+
+<h3 id="depth-refocusing">Depth Refocusing</h3>
+
+<p>The first part of this project is implementing an algorithm to combine the images in such a way that we can
+selectively focus on a specific portion of the image. More concretely, this means that we can “refocus” onto
+objects at different depths in the image. To do this, we leverage the parallax effect, where objects up close
+move more quickly through the frame than objects which are far – this means that if we shift the images by
+the appropriate amount, we can ensure that one portion of the composite image remains in focus, while
+distorting the others. In terms of code, we can do the following:</p>
+<ol>
+  <li>Because the images are lined on a 17x17 grid, then we compute the center image, which lies at (8, 8).</li>
+  <li>For every other image, we compute subaperture distance, which is given by <code class="language-plaintext highlighter-rouge">x - 8</code> and <code class="language-plaintext highlighter-rouge">y - 8</code>.</li>
+  <li>We then shift the other images by <code class="language-plaintext highlighter-rouge">(x - 8) * const</code> and <code class="language-plaintext highlighter-rouge">-(y - 8) * const</code> using <code class="language-plaintext highlighter-rouge">np.roll()</code> along the <code class="language-plaintext highlighter-rouge">axis = (0, 1)</code>. 
+The variable <code class="language-plaintext highlighter-rouge">const</code> is a scaling factor we use to control the amount we shift by, which indirectly controls
+focus depth. The negative in the shift along the y-axis is simply there due to <code class="language-plaintext highlighter-rouge">np.roll()</code>, so that we ensure
+we are shifting the images in the correct direction to produce a focused image.</li>
+</ol>
+
+<p align="center">
+  <img src="images/focus.gif" width="700" />
+</p>
+
+<p>You can see the focus shifting from the pieces in the back to the front, which shows the proper alignment.</p>
+
+<h3 id="aperture-adjustment">Aperture Adjustment</h3>
+
+<p>Now, we move on to the second part, which focuses on adjusting the aperture. For this section, the only thing
+we need to change is the kind of images we want to use when computing the mean image. In particular, we set
+an aperture distance using the variable <code class="language-plaintext highlighter-rouge">aperture</code>, and impose the condition that we only use the image if
+<code class="language-plaintext highlighter-rouge">np.abs(x - 8) &lt; aperture</code> or <code class="language-plaintext highlighter-rouge">np.abs(y - 8) &lt; aperture</code>.</p>
+
+<p>To see why this is the correct condition, consider a small aperture, which has a high depth of field. In the
+image, this translates to objects far away from the point of focus are still relatively clear. On the
+contrary, a low depth of field corresponds blurrier edges, assuming we focus on the center of the image. Now
+consider the condition we impose: for points which satisfy the aperture inequality (for a reasonably small
+value of <code class="language-plaintext highlighter-rouge">aperture</code>), it means that the location of the same object within all the images will be nearly the
+same, so when we compute the mean image even objects which are far from the point of focus are still
+basically in focus. When we increase the value of <code class="language-plaintext highlighter-rouge">aperture</code>, parallax effects start dominating, which causes
+objects which aren’t near the point of focus to become blurrier.</p>
+
+<p>Below is an example where we take <code class="language-plaintext highlighter-rouge">aperture</code> between values 1 and 5, while setting the refocusing constant to
+<code class="language-plaintext highlighter-rouge">const = 2</code>. As can be seen in the gif, as the aperture increases we lose more of the chess pieces in the
+back as they are far away from the point of focus (in the front).</p>
+
+<p align="center">
+  <img src="images/aperture.gif" width="700" />
+</p>
+
+<p>Here, you can see the depth of field changing, as evidenced by the objects in the back becoming progressively 
+blurrier as the aperture increases. This mimics exactly what we see in a real camera, which was really cool 
+to see.</p>
+
+<h3 id="summary">Summary</h3>
+
+<p>This was really cool to learn about! As an avid camera person, it was cool seeing how multiple copies of the
+same scene can be taken, and used together to change things like the point of focus and aperture using such
+simple operations, and produce something that is akin to a result you would get from a digital camera had you
+actually varied things like the focus and aperture size. For me, I think the beauty here is in the simplicity
+of the algorithm: just a simple shift combined with an averaging can produce a result that I never would have 
+expected.</p>
+
+<h2 id="part-2-gradient-fusion">Part 2: Gradient Fusion</h2>
+<p>For this part of the project, I made use of the suggestions and the starter code provided in
+<a href="https://courses.grainger.illinois.edu/cs445/fa2023/projects/gradient/ComputationalPhotography_ProjectGradient.html">this link</a>
+to complete this project. This, along with some pointers from my friends, were instrumental 
+in completing this project.</p>
+
+<p>In this part of the project, we implement a more complex version of what we did in project 2: image blending.
+In the latter part of project 2, we implemented a way to blend two images together, making use of a Laplacian
+to ensure that we get a good blending procedure. In this project, we investigate Poisson blending, a
+procedure used to blend two images together using gradients. In theory, this should work better than 
+a naive Laplacian stack, namely because gradients in an image tell us where features lie, so if we can 
+figure out how to mix them together properly, we in theory get the best kind of blending.</p>
+
+<p>Before delving into the code, we should go over how the process actually works, and do to that let’s revisit
+our goal: ultimately we want to blend two images together, so this amounts to finding the optimal way to
+“stitch” a source image <code class="language-plaintext highlighter-rouge">src_img</code> onto a target image <code class="language-plaintext highlighter-rouge">targ_img</code>. To do this, we essentially just need to
+consider how the boundary between the source and target images interact, since determining the best way to
+navigate the transition will give us the optimal way to stitch the two images together. To do this, Poisson
+blending essentially calculates gradients in and around the patch where we want to blend the two images
+together, using gradients in the source image to determine how to fill the inside of the patch, then using
+the edges to determine how to “stitch” them together.</p>
+
+<p>Put simply, the theory is like this: given the gradient of a function (in this case, it’s an image) and also
+some boundary conditions, you can determine how the function behaves over the entire space. 
+This is essentially what Poisson blending does. In particular, Poisson blending finds the function that
+minimizes the gradient, so that we get a smooth transition between the source and target images:</p>
+
+\[\mathbf{v} = \text{argmin}_{\mathbf v } \sum_{i \in S, j \in N_i \cap S} ((v_i - v_j) - (s_i - s_j))^2 + \sum_{i
+\in S, j \in N_i \cap \neg S} ((v_i - t_j) - (s_i - s_j))^2\]
+
+<p>This equation mathematically describes what we talked about above: \(N_i\) is the set of points that are
+neighbors of pixel \(i\), which are the four pixels above, below, left and right. \(S\) is the set of points
+that are in the source image, and the complement are the points that are not in \(S\). The argmin condition
+selects the image vector which minimizes the gradient; the first term encodes the gradient inside 
+the patch \(S\), and the second term sets our boundary condition.</p>
+
+<h3 id="toy-model">Toy Model</h3>
+
+<p>From the previous section, it should be clear that a central part of Poisson blending is figuring out how to
+reconstruct an image given the gradients and an initial condition, which is what we do here with a toy model
+to familiarize ourselves with it. Here, we will take the image <code class="language-plaintext highlighter-rouge">toy_problem.png</code> given in the project spec
+and try to recreate it by computing the gradients. To do this, we have three constraints to satisfy:</p>
+<ol>
+  <li>Minimize <code class="language-plaintext highlighter-rouge">(v(x+1,y)-v(x,y) - (s(x+1,y)-s(x,y)))^2</code>.</li>
+  <li>Minimize <code class="language-plaintext highlighter-rouge">(v(x,y+1)-v(x,y) - (s(x,y+1)-s(x,y)))^2</code>.</li>
+  <li>Minimize <code class="language-plaintext highlighter-rouge">(v(1,1)-s(1,1))^2</code>.</li>
+</ol>
+
+<p>The third condition is there to essentially set an initial condition, since the addition of any constant to
+the solution of the first two is also a solution. This third condition is essentially the “initial condition”
+we were talking about earlier. In terms of code, we can implement this as a least squares problem, as
+follows:</p>
+
+<ol>
+  <li>First, start with a list <code class="language-plaintext highlighter-rouge">im2var[i, j] = np.arange(n_rows * n_cols).reshape(n_rows, n_cols)</code>. This
+essentially gives us a way to index into \(\mathbf v\) properly. Then, we calculate the number of
+constraints, given by <code class="language-plaintext highlighter-rouge">num_constraints = (n_rows - 1) * n_cols + n_rows * (n_cols - 1) + 1</code>. The first two
+terms are the constraints in the <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code>, and the final <code class="language-plaintext highlighter-rouge">+1</code> is the initial condition.</li>
+  <li>We start with a sparse matrix <code class="language-plaintext highlighter-rouge">A = scipy.sparse.lil_matrix(num_constraints, n_rows * n_cols)</code>, and an 
+equation counter <code class="language-plaintext highlighter-rouge">constraint = 0</code> that counts the constraint we are on. Initialize <code class="language-plaintext highlighter-rouge">b =
+np.zeros(num_constraints)</code> as a zero vector for now.</li>
+  <li>For each pixel <code class="language-plaintext highlighter-rouge">(i, j)</code> in the image, we compute two gradients, one in <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code>. As an example, the
+<code class="language-plaintext highlighter-rouge">x</code>-direction constraint looks like: <code class="language-plaintext highlighter-rouge">A[constraint, im2var[i, j + 1]] = 1</code> and <code class="language-plaintext highlighter-rouge">A[constraint, im2var[i,j]]
+= -1</code> This encodes the <code class="language-plaintext highlighter-rouge">v(x + 1, y) - v(x, y)</code> part of the constraint above. We then use <code class="language-plaintext highlighter-rouge">b[constraint] =
+img[i, j + 1] - img[i, j]</code> to encode the <code class="language-plaintext highlighter-rouge">s(x + 1, y) - s(x, y)</code> part. The least squares condition will then
+find the <code class="language-plaintext highlighter-rouge">v</code> that makes <code class="language-plaintext highlighter-rouge">v(x + 1, y) - v(x, y)</code> as close as possible to <code class="language-plaintext highlighter-rouge">s(x + 1, y) - s(x, y)</code>, which is
+equivalent to finding the minimum of the difference.</li>
+  <li>After iterating through all the pixels, we can solve this least squares using <code class="language-plaintext highlighter-rouge">scipy.sparse.linalg.lsqr(A,
+b)</code>. We then reshape the solved vector <code class="language-plaintext highlighter-rouge">v</code> into <code class="language-plaintext highlighter-rouge">img.shape</code> so that it generates an image.</li>
+</ol>
+
+<p>Doing this on <code class="language-plaintext highlighter-rouge">toy_problem.png</code>, we get the following result:</p>
+
+<p align="center">
+  <img src="images/toy_model.png" width="500" />
+</p>
+
+<p>According to the code, the maximum error between the two images is is 0.35, but to be honest I can’t tell you
+where that difference comes from; the images look completely identical.</p>
+
+<h3 id="poisson-blending">Poisson Blending</h3>
+
+<p>Now we are ready to move on to the Poisson blending part of this project, which aims to minimize the
+objective we laid out earlier. We generate the patch we want to stitch using a mask over the source image,
+which we implement using a slightly modified version of what we had in project 2 to select correspondence
+points. This is done using the <code class="language-plaintext highlighter-rouge">get_mask(img, num_points)</code> function I define, where <code class="language-plaintext highlighter-rouge">num_points</code> defines the
+the number of vertices we use for the polygonal mask. For instance, I used the <code class="language-plaintext highlighter-rouge">penguin_chick.jpg</code> using a
+7-point mask, which came out like this:</p>
+
+<p align="center">
+  <img src="images/mask.png" width="500" />
+</p>
+
+<p>Now we move to the blending process itself. The approach here is actually very similar to that of the 
+previous part, with the only major exception being that the nubmer of constraints is not immediately 
+known, since the summation in the constraint is over \(i \in S\), so the number of constraints is directly
+tied to the number of pixels in the mask. Because we are using an irregular mask, this is impossible 
+to determine beforehand. So, we modify the procedure from the previous section slightly:</p>
+
+<ol>
+  <li>Initialize <code class="language-plaintext highlighter-rouge">A</code> first as an “empty” sparse matrix of dimension <code class="language-plaintext highlighter-rouge">(0, n_rows * n_cols)</code>, since we start 
+off with zero constraints. Initialize <code class="language-plaintext highlighter-rouge">b</code> to be an empty list for the same reason.</li>
+  <li>Iterate through every pixel in <code class="language-plaintext highlighter-rouge">src_img</code>, but only look at the points \(i \in S\), so this corresponds 
+to points where <code class="language-plaintext highlighter-rouge">object_mask[i, j] = 1</code>. Then, for every such point, we initialize a row of <code class="language-plaintext highlighter-rouge">A</code> 
+using <code class="language-plaintext highlighter-rouge">A_row = scipy.sparse.lil_matrix(1, n_rows * n_cols)</code>, which we now proceed to populate depending 
+on the values of the four neighbors of the pixel <code class="language-plaintext highlighter-rouge">(i, j)</code>. To get the neighbors I defined a helper 
+function <code class="language-plaintext highlighter-rouge">get_neighbors(i, j)</code>, which returns the four adjacent points, which is then accessed 
+using <code class="language-plaintext highlighter-rouge">object_mask[x, y]</code>. Depending on the value of <code class="language-plaintext highlighter-rouge">object_mask[x, y]</code>, we then do one of the following:
+    <ol>
+      <li>If <code class="language-plaintext highlighter-rouge">object_mask[x, y] = 1</code>, then the neighboring point is also in the mask, so this is part of the
+ first summation term. In this case, we set <code class="language-plaintext highlighter-rouge">A_row[0, im2var[i, j]] = 1</code> and 
+ <code class="language-plaintext highlighter-rouge">A_row[0, im2var[x, y]] = -1</code>, to match the first term. We then append 
+ <code class="language-plaintext highlighter-rouge">object_img[i, j] - object_img[x, y]</code> to <code class="language-plaintext highlighter-rouge">b</code>, matching the \(s_i - s_j\) term.</li>
+      <li>If <code class="language-plaintext highlighter-rouge">object_mask[x, y] = 0</code> (the only other case because our mask is binary), then the constraint
+ belongs to the second term. Here, we don’t subtract \(v_j\), so there are no modifications to <code class="language-plaintext highlighter-rouge">A_row</code>.
+ For <code class="language-plaintext highlighter-rouge">b</code>, we now append <code class="language-plaintext highlighter-rouge">object_img[i, j] - object_img[x, y] + bg_img[x + bg_ul[0], y + bg_ul[1]]</code> to match the \(t_j - (s_i - s_j)\) term. The <code class="language-plaintext highlighter-rouge">bg_ul</code> is a tuple containing the upper left corner of where we want our image to be pasted; this is used here so that we extract the proper pixel intensity from the background image.</li>
+    </ol>
+  </li>
+  <li>Now, we append <code class="language-plaintext highlighter-rouge">A_row</code> to <code class="language-plaintext highlighter-rouge">A</code>, and move on to the next pixel. Once this is done for all pixels, we do the same thing as the previous section: we use <code class="language-plaintext highlighter-rouge">scipy.sparse.linalg.lsqr(A, b)</code> to solve for \(\mathbf v\) and reshape to <code class="language-plaintext highlighter-rouge">object_img.shape</code> to produce a picture.</li>
+  <li>We then paste this reconstructed image onto the background canvas, using the provided <code class="language-plaintext highlighter-rouge">utils.get_combined_img()</code> function in the <code class="language-plaintext highlighter-rouge">utils.py</code> file.</li>
+</ol>
+
+<p>With all these steps complete, we now have the fully blended image, shown below. I’ve also included a “naive” blending, which just consists of replacing the patch with the source image with no blending at all. Of cousre, you can see the big difference blending makes.</p>
+
+<p align="center">
+  <img src="images/penguin-naive.png" width="300" />
+  <img src="images/penguin-poisson.png" width="300" />
+  <div align="center"> 
+  Left: Naive blending, Right: Poisson blending
+</div>
+</p>
+
+<p>One thing I would like to mention here is that yes, while the blending indeed looks nicer than the Laplacian stack blending we did in project 2, the cost we pay is a significant jump in runtime. By comparison, the Laplacian stack blended similar size images in 10 seconds, whereas this blending took 7 minutes. In the Laplacian stack, our runtime is more or less dominated by the dot product of the image with our mask, which runs in overall roughly \(O(n^2)\) time, \(n\) being the number of pixels in the source image. Here, because we are calculating least-squares, then this runtime jumps up to \(O(n^3)\) time, so the computation becomes expensive really really quickly. This is more clear with the following blend, where I blended a ditto:</p>
+
+<p align="center">
+  <img src="images/ditto2-naive.png" width="300" />
+  <img src="images/ditto2-poisson.png" width="300" />
+  <div align="center"> 
+  Left: Naive blending, Right: Poisson blending
+</div>
+</p>
+
+<p>This image, despite being only like 1.5x the size of the penguin, took a whole 42 minutes to generate. I do very much like the result though, the end result makes the runtime worth it in my opinion. Finally, this next combination I was mainly inspired by all the images saying “this is what the night sky will look like in 2 billion years when the Andromeda collides with our milky way”:</p>
+
+<p align="center">
+  <img src="images/andromeda-naive.png" width="300" />
+</p>
+<p>Obviously this looks bad because it’s not blended, so let’s poisson blend them together:</p>
+
+<p align="center">
+  <img src="images/andromeda-poisson.png" width="300" />
+</p>
+<p>Clearly this is a much better result. My one gripe is that the Andromeda galaxy looks a little small here, but in the interest of not blowing up my laptop, I think this is a good compromise.</p>
+
+<h3 id="bw-mixed-gradients">B&amp;W: Mixed Gradients</h3>
+
+<p>For the Bells and whistles of this project, I chose to do the mixed gradients blending. In this approach, we make a slight modification to the objective function:</p>
+
+\[\mathbf{v} = \text{argmin}_{\mathbf v } \sum_{i \in S, j \in N_i \cap S} ((v_i - v_j) - d_{ij})^2 + \sum_{i
+\in S, j \in N_i \cap \neg S} ((v_i - t_j) - d_{ij})^2\]
+
+<p>Here, \(d_{ij}\) is the value of the larger gradient magnitude between the source and target image. In Poisson blending, \(d_{ij}\) was always the source gradient, but here we make the change to sometimes use the target gradient as well. To implement this change in code, we compute the gradients as <code class="language-plaintext highlighter-rouge">src_gradient = object_img[i, j] - object_img[x, y]</code> and <code class="language-plaintext highlighter-rouge">targ_gradient = bg_img[i + bg_ul[0], j + bg_ul[1]] - bg_img[x + bg_ul[0], y + bg_ul[1]]</code>, 
+and we compare <code class="language-plaintext highlighter-rouge">abs(src_gradient)</code> and <code class="language-plaintext highlighter-rouge">abs(targ_gradient)</code>. Then, we use the gradient wiht the larger magnitude in our objective.</p>
+
+<p>In theory, this should give us an even better blending result, assuming that the source image has relatively high gradients compared to the background. Doing this on the penguin image, I get this:</p>
+
+<p align="center">
+  <img src="images/penguin-mixed.png" width="300" />
+</p>
+
+<p>To be honest, I don’t really see much of a difference between this and the Poisson blending. This is to be expected, since the gradients “behind” the penguin are generally lower than that of the penguin itself, so the mixed gradients will more often than not choose the gradient in the penguin. I do see a difference with the ditto though:</p>
+
+<p align="center">
+  <img src="images/ditto2-mixed.png" width="300" />
+</p>
+
+<p>Compared to the Poisson blending, we can see two things: first, there used to be a somewhat blurry patch around the ditto which is now completely gone in the mixed blending (in my view, this is a good thing). However, ditto has now become slightly transparent: this is because the specks in the snow have a higher gradient than ditto, so the algorithm will now select those gradients over ditto, causing him to become transparent. Finally, I did the mixed blending on the <code class="language-plaintext highlighter-rouge">andromeda.jpg</code> from earlier, and the result looks very similar to the Poisson blending result.</p>
+
+<p align="center">
+  <img src="images/andromeda-mixed.png" width="300" />
+</p>
+
+<p>This is to be expected though, since the gradient in the night sky photo I chose as a background has a very low gradient, so the mixed gradiens algorithm will end up choosing the gradient in the source (andromeda) almost all the time, so that’s why the results look the same as in Poisson blending.</p>
+
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 180 Projects</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">CS 180 Projects</li><li><a class="u-email" href="mailto:eric.du03@berkeley.edu">eric.du03@berkeley.edu</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
