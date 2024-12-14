@@ -30,12 +30,18 @@ The variable `const` is a scaling factor we use to control the amount we shift b
 focus depth. The negative in the shift along the y-axis is simply there due to `np.roll()`, so that we ensure
 we are shifting the images in the correct direction to produce a focused image. 
 
+Depending on the value of `const` we choose, the resulting point of focus changes. In particular, we find
+that as the constant increases, the focus moves from the back of the image to the front, up to a limit. Below
+is a gif showing this transition, from a `const = 0` to `const = 3`. 
+
 <p align="center">
   <img src="images/focus.gif"
   width = "700"/>
 </p>
 
-You can see the focus shifting from the pieces in the back to the front, which shows the proper alignment. 
+Intuitively, this effect should also make sense: because of parallax, objects in the foreground move more 
+compared to those in the background, so naturally it is expected that in order to focus objects in the front,
+you'd need to shift each subaperture image by a larger amount.
 
 ### Aperture Adjustment
 
