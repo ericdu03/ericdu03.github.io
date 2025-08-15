@@ -30,12 +30,18 @@ The variable `const` is a scaling factor we use to control the amount we shift b
 focus depth. The negative in the shift along the y-axis is simply there due to `np.roll()`, so that we ensure
 we are shifting the images in the correct direction to produce a focused image. 
 
+Depending on the value of `const` we choose, the resulting point of focus changes. In particular, we find
+that as the constant increases, the focus moves from the back of the image to the front, up to a limit. Below
+is a gif showing this transition, from a `const = 0` to `const = 3`. 
+
 <p align="center">
   <img src="images/focus.gif"
   width = "700"/>
 </p>
 
-You can see the focus shifting from the pieces in the back to the front, which shows the proper alignment. 
+Intuitively, this effect should also make sense: because of parallax, objects in the foreground move more 
+compared to those in the background, so naturally it is expected that in order to focus objects in the front,
+you'd need to shift each subaperture image by a larger amount.
 
 ### Aperture Adjustment
 
@@ -186,11 +192,19 @@ using `object_mask[x, y]`. Depending on the value of `object_mask[x, y]`, we the
     `object_img[i, j] - object_img[x, y]` to `b`, matching the $$s_i - s_j$$ term.  
     2. If `object_mask[x, y] = 0` (the only other case because our mask is binary), then the constraint
     belongs to the second term. Here, we don't subtract $$v_j$$, so there are no modifications to `A_row`.
-    For `b`, we now append `object_img[i, j] - object_img[x, y] + bg_img[x + bg_ul[0], y + bg_ul[1]]` to match the $$t_j - (s_i - s_j)$$ term. The `bg_ul` is a tuple containing the upper left corner of where we want our image to be pasted; this is used here so that we extract the proper pixel intensity from the background image. 
-3. Now, we append `A_row` to `A`, and move on to the next pixel. Once this is done for all pixels, we do the same thing as the previous section: we use `scipy.sparse.linalg.lsqr(A, b)` to solve for $$\mathbf v$$ and reshape to `object_img.shape` to produce a picture.
-4. We then paste this reconstructed image onto the background canvas, using the provided `utils.get_combined_img()` function in the `utils.py` file. 
+    For `b`, we now append `object_img[i, j] - object_img[x, y] + bg_img[x + bg_ul[0], y + bg_ul[1]]` to
+    match the $$t_j - (s_i - s_j)$$ term. The `bg_ul` is a tuple containing the upper left corner of 
+    where we want our image to be pasted; this is used here so that we extract the proper pixel intensity 
+    from the background image. 
+3. Now, we append `A_row` to `A`, and move on to the next pixel. Once this is done for all pixels, we do 
+the same thing as the previous section: we use `scipy.sparse.linalg.lsqr(A, b)` to solve for $$\mathbf v$$ 
+and reshape to `object_img.shape` to produce a picture.
+4. We then paste this reconstructed image onto the background canvas, using the provided 
+`utils.get_combined_img()` function in the `utils.py` file. 
 
-With all these steps complete, we now have the fully blended image, shown below. I've also included a "naive" blending, which just consists of replacing the patch with the source image with no blending at all. Of cousre, you can see the big difference blending makes.
+With all these steps complete, we now have the fully blended image, shown below. I've also included a "naive" 
+blending, which just consists of replacing the patch with the source image with no blending at all. Of course, 
+you can see the big difference blending makes.
  
 <p align="center">
   <img src = "images/penguin-naive.png"
@@ -202,7 +216,14 @@ With all these steps complete, we now have the fully blended image, shown below.
 </div>
 </p>
 
-One thing I would like to mention here is that yes, while the blending indeed looks nicer than the Laplacian stack blending we did in project 2, the cost we pay is a significant jump in runtime. By comparison, the Laplacian stack blended similar size images in 10 seconds, whereas this blending took 7 minutes. In the Laplacian stack, our runtime is more or less dominated by the dot product of the image with our mask, which runs in overall roughly $$O(n^2)$$ time, $$n$$ being the number of pixels in the source image. Here, because we are calculating least-squares, then this runtime jumps up to $$O(n^3)$$ time, so the computation becomes expensive really really quickly. This is more clear with the following blend, where I blended a ditto:
+One thing I would like to mention here is that yes, while the blending indeed looks nicer than the 
+Laplacian stack blending we did in project 2, the cost we pay is a significant jump in runtime. By 
+comparison, the Laplacian stack blended similar size images in 10 seconds, whereas this blending 
+took 7 minutes. In the Laplacian stack, our runtime is more or less dominated by the dot product of 
+the image with our mask, which runs in overall roughly $$O(n^2)$$ time, $$n$$ being the number of 
+pixels in the source image. Here, because we are calculating least-squares, then this runtime 
+jumps up to $$O(n^3)$$ time, so the computation becomes expensive really really quickly. This is 
+more clear with the following blend, where I blended a ditto:
  
 <p align="center">
   <img src = "images/ditto2-naive.png"
@@ -214,50 +235,71 @@ One thing I would like to mention here is that yes, while the blending indeed lo
 </div>
 </p>
 
-This image, despite being only like 1.5x the size of the penguin, took a whole 42 minutes to generate. I do very much like the result though, the end result makes the runtime worth it in my opinion. Finally, this next combination I was mainly inspired by all the images saying "this is what the night sky will look like in 2 billion years when the Andromeda collides with our milky way":
+This image, despite being only like 1.5x the size of the penguin, took a whole 42 minutes to generate.
+I do very much like the result though, the end result makes the run time worth it in my opinion. 
+Finally, this next combination I was mainly inspired by all the images saying "this is what the night 
+sky will look like in 2 billion years when the Andromeda collides with our milky way":
 
 <p align="center">
   <img src = "images/andromeda-naive.png"
   width = "300">
 </p>
-Obviously this looks bad because it's not blended, so let's poisson blend them together: 
+Obviously this looks bad because it's not blended, so let's Poisson blend them together: 
 
 <p align="center">
   <img src = "images/andromeda-poisson.png"
   width = "300">
 </p>
-Clearly this is a much better result. My one gripe is that the Andromeda galaxy looks a little small here, but in the interest of not blowing up my laptop, I think this is a good compromise.
+Clearly this is a much better result. My one gripe is that the Andromeda galaxy looks a little small 
+here, but in the interest of not blowing up my laptop, I think this is a good compromise.
 
 ### B&W: Mixed Gradients
 
-For the Bells and whistles of this project, I chose to do the mixed gradients blending. In this approach, we make a slight modification to the objective function:  
+For the Bells and whistles of this project, I chose to do the mixed gradients blending. In this 
+approach, we make a slight modification to the objective function:  
 
 $$ \mathbf{v} = \text{argmin}_{\mathbf v } \sum_{i \in S, j \in N_i \cap S} ((v_i - v_j) - d_{ij})^2 + \sum_{i
 \in S, j \in N_i \cap \neg S} ((v_i - t_j) - d_{ij})^2 $$
 
-Here, $$d_{ij}$$ is the value of the larger gradient magnitude between the source and target image. In Poisson blending, $$d_{ij}$$ was always the source gradient, but here we make the change to sometimes use the target gradient as well. To implement this change in code, we compute the gradients as `src_gradient = object_img[i, j] - object_img[x, y]` and `targ_gradient = bg_img[i + bg_ul[0], j + bg_ul[1]] - bg_img[x + bg_ul[0], y + bg_ul[1]]`, 
-and we compare `abs(src_gradient)` and `abs(targ_gradient)`. Then, we use the gradient wiht the larger magnitude in our objective.
+Here, $$d_{ij}$$ is the value of the larger gradient magnitude between the source and target image. 
+In Poisson blending, $$d_{ij}$$ was always the source gradient, but here we make the change to sometimes 
+use the target gradient as well. To implement this change in code, we compute the gradients as 
+`src_gradient = object_img[i, j] - object_img[x, y]` and `targ_gradient = bg_img[i + bg_ul[0], 
+j + bg_ul[1]] - bg_img[x + bg_ul[0], y + bg_ul[1]]`, 
+and we compare `abs(src_gradient)` and `abs(targ_gradient)`. Then, we use the gradient wiht the larger 
+magnitude in our objective.
 
-In theory, this should give us an even better blending result, assuming that the source image has relatively high gradients compared to the background. Doing this on the penguin image, I get this:
+In theory, this should give us an even better blending result, assuming that the source image has 
+relatively high gradients compared to the background. Doing this on the penguin image, I get this:
 
 <p align="center">
   <img src = "images/penguin-mixed.png"
   width = "300">
 </p>
 
-To be honest, I don't really see much of a difference between this and the Poisson blending. This is to be expected, since the gradients "behind" the penguin are generally lower than that of the penguin itself, so the mixed gradients will more often than not choose the gradient in the penguin. I do see a difference with the ditto though:  
+To be honest, I don't really see much of a difference between this and the Poisson blending. This 
+is to be expected, since the gradients "behind" the penguin are generally lower than that of the 
+penguin itself, so the mixed gradients will more often than not choose the gradient in the penguin. 
+I do see a difference with the ditto though:  
 
 <p align="center">
   <img src = "images/ditto2-mixed.png"
   width = "300">
 </p>
 
-Compared to the Poisson blending, we can see two things: first, there used to be a somewhat blurry patch around the ditto which is now completely gone in the mixed blending (in my view, this is a good thing). However, ditto has now become slightly transparent: this is because the specks in the snow have a higher gradient than ditto, so the algorithm will now select those gradients over ditto, causing him to become transparent. Finally, I did the mixed blending on the `andromeda.jpg` from earlier, and the result looks very similar to the Poisson blending result.
+Compared to the Poisson blending, we can see two things: first, there used to be a somewhat blurry 
+patch around the ditto which is now completely gone in the mixed blending (in my view, this is a 
+good thing). However, ditto has now become slightly transparent: this is because the specks in the 
+snow have a higher gradient than ditto, so the algorithm will now select those gradients over ditto, 
+causing him to become transparent. Finally, I did the mixed blending on the `andromeda.jpg` from 
+earlier, and the result looks very similar to the Poisson blending result.
 
 <p align="center">
   <img src = "images/andromeda-mixed.png"
   width = "300">
 </p>
 
-This is to be expected though, since the gradient in the night sky photo I chose as a background has a very low gradient, so the mixed gradiens algorithm will end up choosing the gradient in the source (andromeda) almost all the time, so that's why the results look the same as in Poisson blending.
+This is to be expected though, since the gradient in the night sky photo I chose as a background has 
+a very low gradient, so the mixed gradients algorithm will end up choosing the gradient in the source 
+(Andromeda) almost all the time, so that's why the results look the same as in Poisson blending.
 
