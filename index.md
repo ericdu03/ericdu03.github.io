@@ -26,6 +26,13 @@ which are available for download here:
 [Physics 110B: Electromagnetism and Optics II](/notes/110B.pdf)    
 [CS 170: Efficient Algorithms and Intractable Problems](/notes/170.pdf)
 
+Alongside doing research, I am also sitting in on some courses that I wanted to take but could not fit
+fit into my course schedule as an undergraduate at UC Berkeley. This fall semester, I am currently "taking" the  
+following courses:
+- Physics 151: Introduction to Quantum Field Theory
+- Physics 221A: Graduate Quantum Mechanics I
+- Compsci 182: Deep Learning
+ 
 ## Physics Notes
 
 I am currently collaborating with Andrew Binder, a former Berkeley student, on a project to consolidate all
