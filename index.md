@@ -1,8 +1,17 @@
 Hello there!
 
 I am a Physics and Computer Science double major from UC Berkeley, currently conducting research
-under Dr. Yen-Yung Chang. I enjoy playing piano, climbing and occasionally I play some badminton. 
+in RF design under Dr. Yen-Yung Chang. I enjoy playing piano, climbing and occasionally I play some badminton. 
 Below is a list of projects I've completed (and some are still ongoing), please check them out! 
+
+## Honors Thesis
+In the last semester as an undergrad at UC Berkeley, I completed the physics honors requirement, part of
+which was to write a thesis on the research I conducted with Yen-Yung on coplanar waveguide (CPW) box
+cavity modes:   
+  
+[Physics honors thesis](thesis.pdf)  
+  
+
 
 ## CS 180
 
