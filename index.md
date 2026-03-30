@@ -70,7 +70,7 @@ Python's `scikit-image` library, using algorithms learned in class.
 [Project 2: Fun with Filters and Frequencies](./project-2/index.md)   
 [Project 3: Face Morphing](./project-3/index.md)   
 [Project 4: Image Warping and Mosaicing, Autostitching](./project-4/index.md)   
-[Project 5: The Power of Diffusion MOdels](./project-5/index.md)   
+[Project 5: The Power of Diffusion Models](./project-5/index.md)   
 [Final Project: Light Field Camera, Gradient Fusion](./final-project/index.md)   
 
 ## Physics Notes
