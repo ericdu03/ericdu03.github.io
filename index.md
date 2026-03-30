@@ -1,4 +1,4 @@
-# Hello there!
+Hello there!
 
 I am a recently-graduated student from UC Berkeley (2025), with BAs in both Physics and Computer Science.
 I am currently a post-baccalaureate researcher working in superconducting qubit fabrication at the Molecular
@@ -38,11 +38,10 @@ I am currently involved in two separate projects as an associate researcher in t
    frequency. This project leverages IBM's `quantum-metal` package to design the resonators, which are then sent to
    Ansys HFSS for eigenmode simulations. 
 
+In addition to these two primary projects, I am also actively involved in other ongoing projects as a member
+of the QCMF group. 
+
 Current supervisor: Dr. Yashwanth Balaji
-
-In addition to these two primary projects, I am also involved in the projects of others working in the QCMF
-group. 
-
 
 ### Whistler Waves
 This was a project I worked on with Dr. Ivan Vasko at the Space Sciences Lab (SSL) into whistler waves the
