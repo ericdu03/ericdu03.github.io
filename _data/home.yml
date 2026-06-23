@@ -1,0 +1,73 @@
+navbar_entries:
+  - title: about
+    url: /about
+
+  - title: research
+    url: /research
+
+  - title: coursework
+    url: /coursework
+
+  - title: thesis
+    url: /thesis.pdf
+
+project_entries:
+  - title: Box Modes Project
+    url: /research#box-modes-project
+    desc: HFSS simulations of spurious package modes in superconducting chip packages.
+    highlight: Research
+
+  - title: Molecular Foundry
+    url: /research#molecular-foundry
+    desc: Superconducting qubit fabrication, ion milling, and CPW resonator simulation work.
+    highlight: LBNL
+
+  - title: Whistler Waves
+    url: /research#whistler-waves
+    desc: Solar wind whistler-wave project completed with the Space Sciences Lab.
+    highlight: SSL
+
+  - title: CS 180 Project 1
+    url: /project-1/
+    desc: Coloring the Prokudin-Gorskii collection with image alignment.
+    highlight: Vision
+
+  - title: CS 180 Project 2
+    url: /project-2/
+    desc: Filters, frequencies, gradients, sharpening, and hybrid images.
+    highlight: Vision
+
+  - title: CS 180 Project 3
+    url: /project-3/
+    desc: Face morphing and related computer vision techniques.
+    highlight: Vision
+
+  - title: CS 180 Project 4
+    url: /project-4/
+    desc: Image warping, mosaicing, and autostitching.
+    highlight: Vision
+
+  - title: CS 180 Project 5
+    url: /project-5/
+    desc: Diffusion models project.
+    highlight: Vision
+
+  - title: Final CS 180 Project
+    url: /final-project/
+    desc: Light field camera and gradient fusion.
+    highlight: Vision
+
+  - title: PhysNotes
+    url: https://physnotes.github.io
+    desc: Collaborative open physics notes project.
+    highlight: Notes
+
+footer_entries:
+  - title: GitHub
+    url: https://github.com/ericdu03
+
+  - title: Courses
+    url: https://github.com/ericdu03/Courses
+
+  - title: PhysNotes
+    url: https://physnotes.github.io

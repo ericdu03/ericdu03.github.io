@@ -78,5 +78,3 @@ As a way to stay sharp on my physics knowledge I am currently collaborating with
 a former Berkeley student and current researcher at Stony Brook University on a project to consolidate all
 of our physics notes we've taken together into a single website and make it available for anybody currently
 studying physics, check it out [here!](https://physnotes.github.io)
-
-
