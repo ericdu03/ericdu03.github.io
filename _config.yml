@@ -18,6 +18,9 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-remote-theme
+  - jekyll-soopr-seo-tag
+  - jekyll-markdown-output
+  - jekyll-llms-output
 
 theme_config:
   appearance: "auto"
