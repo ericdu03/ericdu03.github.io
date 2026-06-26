@@ -1,11 +1,8 @@
 ---
-title: 'Project 3: Face Morphing'
-url: http://localhost:4000/project-3/
-author: Eric Du
+layout: post
+title: "Project 3: Face Morphing"
+permalink: /project-3/
 ---
-
-# Project 3: Face Morphing
-
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
 

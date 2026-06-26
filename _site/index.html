@@ -1,148 +1,457 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Eric Du</title>
-<meta name="generator" content="Jekyll v3.10.0" />
+<html lang="en" class="html" data-theme="auto"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>
+    
+      Eric Du
+    
+  </title>
+
+  <!-- Begin Jekyll SEO tag v2.7.3 -->
+<meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Eric Du" />
+<meta name="author" content="Eric Du" />
 <meta property="og:locale" content="en_US" />
 <link rel="canonical" href="http://localhost:4000/" />
 <meta property="og:url" content="http://localhost:4000/" />
 <meta property="og:site_name" content="Eric Du" />
-<meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Eric Du" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","headline":"Eric Du","name":"Eric Du","url":"http://localhost:4000/"}</script>
+{"name":"Eric Du","author":{"@type":"Person","name":"Eric Du"},"url":"http://localhost:4000/","@type":"WebSite","headline":"Eric Du","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Eric Du" /></head>
-<body><header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">Eric Du</a><nav class="site-nav">
-        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
-        <label for="nav-trigger">
-          <span class="menu-icon">
-            <svg viewBox="0 0 18 15" width="18px" height="15px">
-              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
-            </svg>
-          </span>
-        </label>
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Eric Du" />
 
-        <div class="trigger"></div>
-      </nav></div>
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/favicon/site.webmanifest">
+  <link rel="mask-icon" href="/assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/assets/images/favicon/favicon.ico">
+  <meta name="msapplication-TileColor" content="#00aba9">
+  <meta name="msapplication-config" content="/assets/images/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Favicon -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/main.css" />
+  
+    <script type="text/javascript">
+  window.addEventListener('load', themeChange);
+  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+  if (currentTheme)
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+  function themeChange() {
+    var button = document.querySelector('.theme-toggle');
+    if (!button) return;
+
+    function updateIcon(theme) {
+      button.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      button.querySelector('.icon-sun').style.display = theme === 'dark' ? 'block' : 'none';
+      button.querySelector('.icon-moon').style.display = theme === 'dark' ? 'none' : 'block';
+    }
+
+    updateIcon(document.documentElement.getAttribute('data-theme'));
+
+    button.addEventListener('click', function (e) {
+      var currentTheme = document.documentElement.getAttribute('data-theme');
+      var next = currentTheme === 'dark' ? 'light' : 'dark';
+
+      transition();
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon(next);
+    });
+
+    function transition() {
+      document.documentElement.classList.add('transition');
+      window.setTimeout(function () {
+        document.documentElement.classList.remove('transition');
+      }, 1000);
+    }
+  }
+</script>
+
+  
+</head>
+<body><main class="page-content" aria-label="Content">
+      <div class="w">
+        <header>
+
+  <ul class="horizontal-list">
+  
+    <li>
+      <a href="/research">
+        Research
+      </a>
+      &nbsp;&nbsp;
+    </li>
+  
+    <li>
+      <a href="https://github.com/ericdu03/Courses">
+        Coursework
+      </a>
+      &nbsp;&nbsp;
+    </li>
+  
+    <li>
+      <a href="/thesis.pdf">
+        Thesis
+      </a>
+      &nbsp;&nbsp;
+    </li>
+  
+</ul>
+
+  <div class="dashed"></div>
+
+
+  <h1>Eric Du</h1>
+  
+    <p></p>
+  
 </header>
-<main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        <div class="home"><p>Hello there!</p>
+
+<p>Hello there!</p>
 
 <p>I am a recently-graduated student from UC Berkeley (2025), with BAs in both Physics and Computer Science.
 I am currently a post-baccalaureate researcher working in superconducting qubit fabrication at the Molecular
 Foundry at Lawrence Berkeley National Lab, under the direct supervision of Dr. Yashwanth Balaji. 
 I also work with Dr. Yen-Yung Chang on RF simulations in Ansys HFSS, where we are investigating ways to
 mitigate spurious resonance modes found in many superconducting chip packages. In my free time, I enjoy
-playing the piano, badminton, and occasionally some gaming. Below is a short list
-of the projects I am involved in, some of which are still in progress.</p>
+playing the piano, badminton, and occasionally some gaming.</p>
 
-<h2 id="current-research">Current Research</h2>
-<p>Below is a list of the ongoing research I am currently involved in.</p>
+<p>I made this website as a way to document the various projects I’m involved in, and occasionally post whenever 
+I feel like it. Have a look around!</p>
 
-<h3 id="box-modes-project">Box Modes Project</h3>
-<p>One persistent issue that superconducting chip packaging currently faces are the creation of spurious “box
-modes” that severely affect the transmission of signal to superconducting devices, and is a major source of
-loss in the system. This project aims to investigate the origins of these “box modes” – how they are
-created, and what are ways we can mitigate their effects. This work
-uses Ansys’s HFSS simulations as the primary driver for experimental results.</p>
 
-<p>This work was also the central focus of my physics honors thesis, completed during my last semester as an
-undergrad at UC Berkeley, available below. At the present, this project is nearing its conclusion and the 
-paper summarizing this work is currently being written.</p>
 
-<p><a href="/thesis.pdf">Physics honors thesis</a></p>
+  <h2></h2>
+  <ul class="horizontal-list">
+  
 
-<p>Current supervisor: Dr. Yen-Yung Chang</p>
+    <li class="card">
+      <a href="/research/box-modes/">
+        <span class="header">
+          Box Modes Project
 
-<h3 id="molecular-foundry">Molecular Foundry</h3>
-<p>I am currently involved in two separate projects as an associate researcher in the QCMF group at the Molecular Foundry:</p>
-<ol>
-  <li>Ion milling: The current state of the art fabrication techniques to make good Josephson Junctions (JJs)
-involves introducing many sources of TLS loss into the system; this project aims to find alternative
-JJ deposition recipes which are minimally damaging to the surrounding chip.</li>
-  <li>Resonator simulations: Currently, the factors which affect a coplanar waveguide (CPW) resonator’s resonance
-frequency, its quality factor, and other properties are not well studied. This project aims to disentangle
-each of these parameters, and determine a consistent recipe which produces high-Q CPW resonators at a known
-frequency. This project leverages IBM’s <code class="language-plaintext highlighter-rouge">quantum-metal</code> package to design the resonators, which are then sent to
-Ansys HFSS for eigenmode simulations.</li>
-</ol>
+          
+            <div><mark> UC Berkeley </mark></div>
+          
 
-<p>In addition to these two primary projects, I am also actively involved in other ongoing projects as a member
-of the QCMF group.</p>
+        </span>
 
-<p>Current supervisor: Dr. Yashwanth Balaji</p>
+        <hr />
 
-<h3 id="whistler-waves">Whistler Waves</h3>
-<p>This was a project I worked on with Dr. Ivan Vasko at the Space Sciences Lab (SSL) into whistler waves the
-solar wind at 1 AU. These waves are theorized to contribute to the persistent heat flux in the solar wind,
-which refers to the fact that the solar wind temperature appears to fall off much slower than classically
-predicted by blackbody radiation. This work was primarily done in MATLAB.</p>
+        
+        <p class="body">
+          HFSS simulations of spurious package modes in superconducting chip packages.
+        </p>
+        
+      </a>
+    </li>
 
-<p>Supervisor: Dr. Ivan Vasko</p>
-<h2 id="coursework">Coursework</h2>
+  
 
-<p>Most of the work that I completed in college (course notes, homework, etc.) are available in my 
-<a href="https://github.com/ericdu03/Courses">courses repo</a>, save for some courses which do not allow me to share such resources. 
-I’ve also taken course notes for several classes, which are available for download here:</p>
+    <li class="card">
+      <a href="/research/ion-milling/">
+        <span class="header">
+          Ion Milling
 
-<p><a href="/notes/110B.pdf">Physics 110B: Electromagnetism and Optics II</a>  <br />
-<a href="/notes/170.pdf">CS 170: Efficient Algorithms and Intractable Problems</a></p>
+          
+            <div><mark> LBNL </mark></div>
+          
 
-<p>More to come with these notes, but these two are the only ones so far that I’ve been able to complete!</p>
+        </span>
 
-<h3 id="cs-180">CS 180</h3>
-<p>This is a computer vision course I took in Fall 2024. All projects except project 5 were completed using
-Python’s <code class="language-plaintext highlighter-rouge">scikit-image</code> library, using algorithms learned in class.</p>
+        <hr />
 
-<p><a href="/project-1/">Project 1: Coloring the Prokudin-Gorskii Collection</a><br />
-<a href="/project-2/">Project 2: Fun with Filters and Frequencies</a> <br />
-<a href="/project-3/">Project 3: Face Morphing</a> <br />
-<a href="/project-4/">Project 4: Image Warping and Mosaicing, Autostitching</a> <br />
-<a href="/project-5/">Project 5: The Power of Diffusion Models</a> <br />
-<a href="/final-project/">Final Project: Light Field Camera, Gradient Fusion</a></p>
+        
+        <p class="body">
+          Developing novel Josephson Junction deposition recipes to improve qubit coherence.
+        </p>
+        
+      </a>
+    </li>
 
-<h2 id="physics-notes">Physics Notes</h2>
+  
 
-<p>As a way to stay sharp on my physics knowledge I am currently collaborating with Andrew Binder, 
-a former Berkeley student and current researcher at Stony Brook University on a project to consolidate all
-of our physics notes we’ve taken together into a single website and make it available for anybody currently
-studying physics, check it out <a href="https://physnotes.github.io">here!</a></p>
+    <li class="card">
+      <a href="/research/resonator-sims/">
+        <span class="header">
+          Resonator Simulations
 
-</div>
+          
+            <div><mark> LBNL </mark></div>
+          
 
+        </span>
+
+        <hr />
+
+        
+        <p class="body">
+          Developing a simulation framework using the quantum-metal and Ansys HFSS.
+        </p>
+        
+      </a>
+    </li>
+
+  
+
+    <li class="card">
+      <a href="/research/something/">
+        <span class="header">
+          Superconducting Rectifier
+
+          
+            <div><mark> UC Berkeley </mark></div>
+          
+
+        </span>
+
+        <hr />
+
+        
+        <p class="body">
+          Designing a high-frequency superconducting rectifier for cryogenic experiments.
+        </p>
+        
+      </a>
+    </li>
+
+  
+
+    <li class="card">
+      <a href="https://physnotes.github.io">
+        <span class="header">
+          Physnotes
+
+          
+
+        </span>
+
+        <hr />
+
+        
+        <p class="body">
+          Authoring a comprehensive book on all core undergraduate physics topics.
+        </p>
+        
+      </a>
+    </li>
+
+  
+</ul>
+
+
+
+
+
+
+
+
+  <h2>Old Projects</h2>
+  <ul class="horizontal-list">
+  
+
+    <li class="card">
+      <a href="/research/whistler-waves/">
+        <span class="header">
+          Whistler Waves
+
+          
+            <div><mark> SSL </mark></div>
+          
+
+        </span>
+
+        <hr />
+
+        
+        <p class="body">
+          Data analysis using MATLAB scripts on whistler waves in the solar wind.
+        </p>
+        
+      </a>
+    </li>
+
+  
+
+    <li class="card">
+      <a href="180-projects/project-1/">
+        <span class="header">
+          Coloring the Prokudin Gorskii collection
+
+          
+            <div><mark> CS 180 </mark></div>
+          
+
+        </span>
+
+        <hr />
+
+        
+        <p class="body">
+          Project 1
+        </p>
+        
+      </a>
+    </li>
+
+  
+
+    <li class="card">
+      <a href="180-projects/project-2/">
+        <span class="header">
+          Fun with Filters and Frequencies
+
+          
+            <div><mark> CS 180 </mark></div>
+          
+
+        </span>
+
+        <hr />
+
+        
+        <p class="body">
+          Project 2
+        </p>
+        
+      </a>
+    </li>
+
+  
+
+    <li class="card">
+      <a href="180-projects/project-3/">
+        <span class="header">
+          Face Morphing
+
+          
+            <div><mark> CS 180 </mark></div>
+          
+
+        </span>
+
+        <hr />
+
+        
+        <p class="body">
+          Project 3
+        </p>
+        
+      </a>
+    </li>
+
+  
+
+    <li class="card">
+      <a href="180-projects/project-4/">
+        <span class="header">
+          Image warping, Mosaicing and Autostitching
+
+          
+            <div><mark> CS 180 </mark></div>
+          
+
+        </span>
+
+        <hr />
+
+        
+        <p class="body">
+          Project 4
+        </p>
+        
+      </a>
+    </li>
+
+  
+
+    <li class="card">
+      <a href="180-projects/project-5/">
+        <span class="header">
+          Diffusion Models
+
+          
+            <div><mark> CS 180 </mark></div>
+          
+
+        </span>
+
+        <hr />
+
+        
+        <p class="body">
+          Project 5
+        </p>
+        
+      </a>
+    </li>
+
+  
+</ul>
+
+
+
+
+
+  <footer>
+    <div class="dashed"></div>
+    <ul class="horizontal-list">
+  
+    <li>
+      <a href="https://github.com/ericdu03">
+        GitHub
+      </a>
+      &nbsp;&nbsp;
+    </li>
+  
+    <li>
+      <a href="https://physnotes.github.io">
+        Physnotes
+      </a>
+      &nbsp;&nbsp;
+    </li>
+  
+</ul>
+
+  </footer>
+
+
+        
+          <button aria-label="Toggle dark mode" aria-pressed="false" class="theme-toggle">
+  <svg class="icon-sun" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="5"></circle>
+    <line x1="12" y1="1" x2="12" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="23"></line>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line x1="1" y1="12" x2="3" y2="12"></line>
+    <line x1="21" y1="12" x2="23" y2="12"></line>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+  </svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+        
+        <div class="credits">&copy;&nbsp;2026&nbsp;Eric Du
+          &nbsp;
+          •
+          &nbsp;Theme&nbsp; <a href="https://github.com/abhinavs/moonwalk" target="_blank" rel="noopener noreferrer">Moonwalk</a>
+        </div>
       </div>
-    </main><footer class="site-footer h-card">
-  <data class="u-url" href="/"></data>
-
-  <div class="wrapper">
-
-    <h2 class="footer-heading">Eric Du</h2>
-
-    <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          <li class="p-name">Eric Du</li><li><a class="u-email" href="mailto:eric.du03@berkeley.edu">eric.du03@berkeley.edu</a></li></ul>
-      </div>
-
-      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
-</div>
-
-      <div class="footer-col footer-col-3">
-        <p></p>
-      </div>
-    </div>
-
-  </div>
-
-</footer>
-</body>
-
+    </main></body>
 </html>

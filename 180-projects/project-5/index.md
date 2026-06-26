@@ -1,10 +1,8 @@
 ---
-title: 'Project 5: Diffusion Models'
-url: http://localhost:4000/project-5/
-author: Eric Du
+layout: post
+title: "Project 5: Diffusion Models"
+permalink: /project-5/
 ---
-
-# Project 5: Diffusion Models
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

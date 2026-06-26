@@ -1,0 +1,70 @@
+navbar_entries:
+  - title: Research
+    url: /research
+
+  - title: Coursework
+    url: https://github.com/ericdu03/Courses
+
+  - title: Thesis
+    url: /thesis.pdf
+
+project_entries:
+  - title: Box Modes Project
+    url: /research/box-modes/
+    desc: HFSS simulations of spurious package modes in superconducting chip packages.
+    highlight: UC Berkeley
+
+  - title: Ion Milling
+    url: /research/ion-milling/
+    desc: Developing novel Josephson Junction deposition recipes to improve qubit coherence.
+    highlight: LBNL
+
+  - title: Resonator Simulations
+    url: /research/resonator-sims/
+    desc: Developing a simulation framework using the quantum-metal and Ansys HFSS.
+    highlight: LBNL
+
+  - title: Superconducting Rectifier
+    url: /research/something/
+    desc: Designing a high-frequency superconducting rectifier for cryogenic experiments.
+    highlight: UC Berkeley
+
+  - title: Physnotes
+    url: https://physnotes.github.io
+    desc: Authoring a comprehensive book on all core undergraduate physics topics.
+
+
+old_project_entries:
+  - title: "Whistler Waves"
+    url: /research/whistler-waves/
+    desc: Data analysis using MATLAB scripts on whistler waves in the solar wind.
+    highlight: SSL
+  - title: "Coloring the Prokudin Gorskii collection"
+    url: 180-projects/project-1/
+    highlight: CS 180
+    desc: Project 1
+  - title: "Fun with Filters and Frequencies"
+    url: 180-projects/project-2/
+    highlight: CS 180
+    desc: Project 2
+  - title: "Face Morphing"
+    url: 180-projects/project-3/
+    highlight: CS 180
+    desc: Project 3
+  - title: "Image warping, Mosaicing and Autostitching"
+    url: 180-projects/project-4/
+    highlight: CS 180
+    desc: Project 4
+  - title: "Diffusion Models"
+    url: 180-projects/project-5/
+    highlight: CS 180
+    desc: Project 5
+
+
+
+footer_entries:
+  - title: GitHub
+    url: https://github.com/ericdu03
+
+  - title: Physnotes
+    url: https://physnotes.github.io

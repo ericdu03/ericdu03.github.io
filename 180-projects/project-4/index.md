@@ -1,10 +1,8 @@
 ---
-title: 'Project 4: Image warping, Mosaicing and Autostitching'
-url: http://localhost:4000/project-4/
-author: Eric Du
+layout: post
+title: "Project 4: Image warping, Mosaicing and Autostitching"
+permalink: /project-4/
 ---
-
-# Project 4: Image warping, Mosaicing and Autostitching
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
