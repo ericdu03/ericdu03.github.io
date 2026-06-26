@@ -1,10 +1,8 @@
 ---
-title: 'Project 2: Fun with Filters and Frequencies'
-url: http://localhost:4000/project-2/
-author: Eric Du
+layout: post
+title: "Project 2: Fun with Filters and Frequencies"
+permalink: /project-2/
 ---
-
-# Project 2: Fun with Filters and Frequencies
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

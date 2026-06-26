@@ -1,7 +1,7 @@
 ---
 layout: post 
 title: Box Modes Project
-permalink: /research/box-modes/
+permalink: /research/ion-milling/
 ---
 
 

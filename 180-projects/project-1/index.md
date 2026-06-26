@@ -1,11 +1,8 @@
 ---
-title: 'Project 1: Coloring the Prokudin-Gorskii collection'
-url: http://localhost:4000/project-1/
-author: Eric Du
+layout: post
+title: "Project 1: Coloring the Prokudin-Gorskii collection"
+permalink: /project-1/
 ---
-
-# Project 1: Coloring the Prokudin-Gorskii collection
-
 <span style = "font-family=Papyrus; font-size:0.8em;"> 
 
 
