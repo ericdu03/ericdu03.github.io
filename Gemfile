@@ -7,9 +7,6 @@ gem "jekyll-sitemap"
 gem "jekyll-markdown-output"
 gem "jekyll-llms-output"
 
-# Moonwalk expects this:
-gem "jekyll-soopr-seo-tag", "~> 2.7"
-
 gem "jekyll-sass-converter", "~> 3.0"
 gem "sass-embedded"
 gem "webrick", "~> 1.8"
