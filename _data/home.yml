@@ -33,6 +33,10 @@ project_entries:
     url: https://physnotes.github.io
     desc: Authoring a comprehensive book on all core undergraduate physics topics.
 
+  - title: Lecture Notes
+    url: /notes/
+    desc: Typed up lecture notes for select courses
+
 
 old_project_entries:
   - title: "Whistler Waves"
