@@ -1,15 +1,15 @@
 navbar_entries:
-  - title: Research
-    url: /research
-
   - title: Coursework
     url: https://github.com/ericdu03/Courses
 
-  - title: Thesis
-    url: /thesis.pdf
+  - title: Lecture Notes
+    url: /notes/
+
+  - title: Physnotes
+    url: https://physnotes.github.io
 
 project_entries:
-  - title: Box Modes Project
+  - title: Box Mode Mitigation
     url: /research/box-modes/
     desc: HFSS simulations of spurious package modes in superconducting chip packages.
     highlight: UC Berkeley
@@ -32,10 +32,6 @@ project_entries:
   - title: Physnotes
     url: https://physnotes.github.io
     desc: Authoring a comprehensive book on all core undergraduate physics topics.
-
-  - title: Lecture Notes
-    url: /notes/
-    desc: Typed up lecture notes for select courses
 
 
 old_project_entries:
@@ -64,11 +60,6 @@ old_project_entries:
     highlight: CS 180
     desc: Project 5
 
-
-
 footer_entries:
   - title: GitHub
     url: https://github.com/ericdu03
-
-  - title: Physnotes
-    url: https://physnotes.github.io
