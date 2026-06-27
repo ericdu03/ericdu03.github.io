@@ -1,6 +1,8 @@
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-<span style = "font-family=Papyrus; font-size:0.8em; margin = 1in">
+---
+layout: post
+title: "Final Project: Light Field Camera and Gradient Fusion" 
+permalink: 180-projects/final-project/
+---
 
 ## Final Project: Light field Camera
 
@@ -28,7 +30,7 @@ distorting the others. In terms of code, we can do the following:
 3. We then shift the other images by `(x - 8) * const` and `-(y - 8) * const` using `np.roll()` along the `axis = (0, 1)`. 
 The variable `const` is a scaling factor we use to control the amount we shift by, which indirectly controls
 focus depth. The negative in the shift along the y-axis is simply there due to `np.roll()`, so that we ensure
-we are shifting the images in the correct direction to produce a focused image. 
+we are shifting the images in the correct direction to produce a focused mage. 
 
 Depending on the value of `const` we choose, the resulting point of focus changes. In particular, we find
 that as the constant increases, the focus moves from the back of the image to the front, up to a limit. Below
@@ -302,4 +304,3 @@ earlier, and the result looks very similar to the Poisson blending result.
 This is to be expected though, since the gradient in the night sky photo I chose as a background has 
 a very low gradient, so the mixed gradients algorithm will end up choosing the gradient in the source 
 (Andromeda) almost all the time, so that's why the results look the same as in Poisson blending.
-

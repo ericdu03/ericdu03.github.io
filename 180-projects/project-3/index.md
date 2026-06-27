@@ -1,10 +1,8 @@
 ---
 layout: post
 title: "Project 3: Face Morphing"
-permalink: /project-3/
+permalink: 180-projects/project-3/
 ---
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
 
 <span style = "font-family=Papyrus; font-size:0.6em;">
 
@@ -65,6 +63,7 @@ a\\b\\c\\d\\e\\f \end{bmatrix} = \begin{bmatrix} q_{x_1} \\ q_{y_1}\\ q_{x_2} \\
 q_{y_2} \\ q_{x_3} \\ q_{y_3} \end{bmatrix}$$
 
 which will give us the values of $$a$$ through $$f$$.  
+
 This can be solved using `np.linalg.solve(a, b)`, which finds these values. With
 $$A$$ found, we now turn to the implementation of the transformation onto the image. 
 

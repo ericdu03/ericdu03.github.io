@@ -1,12 +1,8 @@
 ---
 layout: post
 title: "Project 4: Image warping, Mosaicing and Autostitching"
-permalink: /project-4/
+permalink: 180-projects/project-4/
 ---
-
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-<span style = "font-family=Papyrus; font-size:0.8em;">
 
 ## Project 4A: Image Warping and Mosaicing
 

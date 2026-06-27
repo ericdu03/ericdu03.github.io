@@ -1,13 +1,8 @@
 ---
 layout: post
 title: "Project 5: Diffusion Models"
-permalink: /project-5/
+permalink: 180-projects/project-5/
 ---
-
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-<span style = "font-family=Papyrus; font-size:0.8em;">
-
 ## Project 5A: The Power of Diffusion Models
 
 In this project, we explore the world of diffusion models, and their ability to generate images from pure

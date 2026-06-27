@@ -1,10 +1,9 @@
 ---
 layout: post
 title: "Project 1: Coloring the Prokudin-Gorskii collection"
-permalink: /project-1/
+permalink: 180-projects/project-1/
 ---
-<span style = "font-family=Papyrus; font-size:0.8em;"> 
-
+<span style = "font-family=Papyrus; font-size:0.8em; margin = 1in"> 
 
 
 Sergey Prokudin-Gorskii (aka. Prokudin-Gorsky) was a Russian chemist and photographer. 
@@ -283,9 +282,8 @@ we see a much better alignment than just using raw RGB values.
 
 The Sobel operator is basically a combination of two matrix convolutions between a matrix which varies only vertically, and one that varies horizontally. [[Source]](https://en.wikipedia.org/wiki/Sobel_operator) 
 
-<p align="center">
-  <img src ="sobel.png">
-</p>
+$$\mathbf{D}_x = \begin{bmatrix} 1 & -1 \end{bmatrix}, \quad \mathbf{D}_y =
+\begin{bmatrix} 1 \\ -1 \end{bmatrix} $$
 
 As a result of the convolution, G_x and G_y are matrices which detect vertical and horizontal edges in the image. Then, combining them via a Euclidean distance metric:  
 
