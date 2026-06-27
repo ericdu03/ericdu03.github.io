@@ -3,8 +3,6 @@ layout: post
 title: "Project 1: Coloring the Prokudin-Gorskii collection"
 permalink: 180-projects/project-1/
 ---
-<span style = "font-family=Papyrus; font-size:0.8em; margin = 1in"> 
-
 
 Sergey Prokudin-Gorskii (aka. Prokudin-Gorsky) was a Russian chemist and photographer. 
 From 1909 to 1915, he pioneered color photography with his three-plate 
@@ -282,14 +280,12 @@ we see a much better alignment than just using raw RGB values.
 
 The Sobel operator is basically a combination of two matrix convolutions between a matrix which varies only vertically, and one that varies horizontally. [[Source]](https://en.wikipedia.org/wiki/Sobel_operator) 
 
-$$\mathbf{D}_x = \begin{bmatrix} 1 & -1 \end{bmatrix}, \quad \mathbf{D}_y =
-\begin{bmatrix} 1 \\ -1 \end{bmatrix} $$
+$$\mathbf{G}_x = \begin{bmatrix} 1 & 0 & -1 \\ 2 & 0 & -2 \\ 1 & 0 & -1 \end{bmatrix}, \quad \mathbf{G}_y =
+\begin{bmatrix} 1 & 2 & 1 \\ 0 &0 & 0\\ -1 & -2 & -1 \end{bmatrix} $$
 
 As a result of the convolution, G_x and G_y are matrices which detect vertical and horizontal edges in the image. Then, combining them via a Euclidean distance metric:  
 
-<p align="center">
-  <img src ="sobel-2.png" width="200">
-</p>
+$$ \mathbf{G} = \sqrt{\mathbf{G}_x^2 + \mathbf{G}_y^2}$$
 
 this combined image now contains information about both the horizontal and vertical edges, creating the overall edge map for the RGB plates as seen above. This explains how the edge map is created, then we use the edge map just as we would the original RGB intensity plates to determine the optimal offset. 
 
