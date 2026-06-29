@@ -41,8 +41,8 @@ theme_config:
   show_old_projects: true
   show_misc_list: false
 
-  show_reading_time: false
-  show_tags: false
+  show_reading_time: true
+  show_tags: true
 
 
   date_format: "%Y-%m-%d"

@@ -3,6 +3,9 @@ layout: post
 title: Whistler Waves in the Solar Wind
 advisor: "Dr. Ivan Vasko"
 permalink: /research/whistler-waves/
+tags: ["MATLAB"]
+author: Eric Du
+date: 2026-06-26
 ---
 
 # Overview 
