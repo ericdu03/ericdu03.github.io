@@ -4,3 +4,13 @@
 @use "moonwalk";
 @use "list";
 @use "syntax";
+
+/* MathJax sizing */
+mjx-container {
+  font-size: 1.0rem !important;
+}
+
+/* Optional: make display equations a little larger */
+mjx-container[display="true"] {
+  font-size: 1.25rem !important;
+}
