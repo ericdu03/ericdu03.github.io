@@ -20,12 +20,12 @@ project_entries:
     highlight: LBNL
 
   - title: Resonator Simulations
-    url: /research/resonator-sims/
+    url: /research/resonator-simulations/
     desc: Developing a simulation framework using the quantum-metal and Ansys HFSS.
     highlight: LBNL
 
   - title: Superconducting Rectifier
-    url: /research/something/
+    url: /research/sc-rectifier/
     desc: Designing a high-frequency superconducting rectifier for cryogenic experiments.
     highlight: UC Berkeley
 

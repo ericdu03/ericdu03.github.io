@@ -1,6 +1,7 @@
 ---
 layout: post 
-title: Box Modes Project
+title: Ion Milling
+advisor: Dr. Yashwanth Balaji
 permalink: /research/ion-milling/
 ---
 

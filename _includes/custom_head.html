@@ -1,6 +1,24 @@
 <head>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+		type="text/javascript"></script> --> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+
+	<!-- _includes/mathjax.html -->
+	<script>
+	window.MathJax = {
+	  tex: {
+		inlineMath: [['\\(', '\\)'], ['$', '$']],
+		displayMath: [['\\[', '\\]'], ['$$', '$$']],
+		processEscapes: true
+	  }
+	};
+	</script>
+
+	<script
+	  id="MathJax-script"
+	  async
+	  src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+	</script>
 </head>
